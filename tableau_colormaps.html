@@ -1,0 +1,294 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Tableau and Scientific colormaps</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="" class="logo"><strong>Tableau and Scientific colormaps</strong> by Robert Džudžar</a>
+									<ul class="icons">
+										<li><a href="https://www.linkedin.com/in/robertdzudzar/" target="_blank" class="icon brands fa-linkedin"></a></li>
+										<li><a href="https://github.com/rdzudzar" target="_blank" class="icon brands fa-github"></a></li>
+										<li><a href="https://twitter.com/robertdzudzar" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+									<h2>Tableau and Scientific colormaps</h2>
+
+									<ul>
+									Here is a tutorial on how to export the scientific colormaps from the python package <a href="https://cmasher.readthedocs.io/index.html" target="_blank"><i>CMasher</i></a> and import them into <a href="https://www.tableau.com/" target="_blank">Tableau</a>. <i>CMasher</i> (<cite><a href="https://joss.theoj.org/papers/10.21105/joss.02004"> Ellert van der Velden, 2020 </a></cite>) is a python package with a collection of scientific colormaps which are designed to be perceptually uniform and most of them are color-vision deficiency friendly. Tableau is a powerful and interactive data visualization tool which is mostly used in the business industry. 
+
+									</ul>
+<h4>Export colormaps</h4>
+<ul>
+The following snippets of code can be used to export the colors from colormaps in HEX and tranform them into Tableau's style. The entire code (<a href="https://github.com/rdzudzar/Tableau_Colormaps" target="_blank">GitHub repository</a>) can be found in this Jupyter Notebook: <a href="https://github.com/rdzudzar/Tableau_Colormaps/blob/master/Tableau_CMasher.ipynb" target="_blank">CMasher and Tableau</a>, while the final Tableau preference file containing all colormaps can be found here <a href="https://github.com/rdzudzar/Tableau_Colormaps/blob/master/Preferences.tps" target="_blank">Preferences.tps</a>. Please see the <a href="https://cmasher.readthedocs.io/index.html" target="_blank"><i>CMasher</i></a> documentation for more details, especially how to use it in Python and how to cite it. 
+
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># Import packages</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">cmasher</span> <span style="color: #008000; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">cmr</span>
+</pre></div>
+
+</ul>
+
+<ul> Firstly we need to extract the names of all the colormaps and their type (whether they are seqyential or diverging), using <i>CMasher</i> functions.
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># Get colormaps</span>
+cmr<span style="color: #666666">.</span>cm<span style="color: #666666">.</span>cmap_d<span style="color: #666666">.</span>keys()
+</pre></div>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># Get type of the colormaps</span>
+cmr<span style="color: #666666">.</span>cm<span style="color: #666666">.</span>cmap_cd<span style="color: #666666">.</span>keys()
+</pre></div>
+</ul>
+
+<ul> Then we obtain all existing colormaps and their type:
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># There are only sequential and diverging colormaps</span>
+<span style="color: #408080; font-style: italic"># We obtain names of colormaps using only those that do not end with &#39;_r&#39; since they are the reversed version of each colormap</span>
+
+sequential_colormap <span style="color: #666666">=</span> [y <span style="color: #008000; font-weight: bold">for</span> y <span style="color: #AA22FF; font-weight: bold">in</span> cmr<span style="color: #666666">.</span>cm<span style="color: #666666">.</span>cmap_cd[<span style="color: #BA2121">&#39;sequential&#39;</span>] <span style="color: #008000; font-weight: bold">if</span> <span style="color: #AA22FF; font-weight: bold">not</span> y<span style="color: #666666">.</span>endswith(<span style="color: #BA2121">&#39;_r&#39;</span>)]
+diverging_colormap <span style="color: #666666">=</span> [y <span style="color: #008000; font-weight: bold">for</span> y <span style="color: #AA22FF; font-weight: bold">in</span> cmr<span style="color: #666666">.</span>cm<span style="color: #666666">.</span>cmap_cd[<span style="color: #BA2121">&#39;diverging&#39;</span>] <span style="color: #008000; font-weight: bold">if</span> <span style="color: #AA22FF; font-weight: bold">not</span> y<span style="color: #666666">.</span>endswith(<span style="color: #BA2121">&#39;_r&#39;</span>)]
+</pre></div>
+</ul>
+
+<ul> Finaly we export the HEX color code from each colormap, for both sequential and diverging type:
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># Get the HEXZ values of each sequential colormaps </span>
+<span style="color: #408080; font-style: italic"># Export them in range of: 0.15 to 0.85 -&gt; you can export the full range if you prefer.</span>
+
+all_sequential_maps_hex <span style="color: #666666">=</span> []
+<span style="color: #008000; font-weight: bold">for</span> colormap <span style="color: #AA22FF; font-weight: bold">in</span> sequential_colormap:
+    <span style="color: #666666">cmp</span> <span style="color: #666666">=</span> cmr<span style="color: #666666">.</span>take_cmap_colors(<span style="color: #BA2121">&#39;cmr.{}&#39;</span><span style="color: #666666">.</span>format(colormap), <span style="color: #008000">None</span>, cmap_range<span style="color: #666666">=</span>(<span style="color: #666666">0.15</span>, <span style="color: #666666">0.85</span>), return_fmt<span style="color: #666666">=</span><span style="color: #BA2121">&#39;hex&#39;</span>)
+    all_sequential_maps_hex<span style="color: #666666">.</span>append(<span style="color: #008000">cmp</span>)
+</pre></div>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># Get the hex values of the diverging colormaps; in range 0.15 to 0.85</span>
+
+all_diverging_maps_hex <span style="color: #666666">=</span> []
+<span style="color: #008000; font-weight: bold">for</span> colormap <span style="color: #AA22FF; font-weight: bold">in</span> diverging_colormap:
+    <span style="color: #666666">cmp</span> <span style="color: #666666">=</span> cmr<span style="color: #666666">.</span>take_cmap_colors(<span style="color: #BA2121">&#39;cmr.{}&#39;</span><span style="color: #666666">.</span>format(colormap), <span style="color: #008000">None</span>, cmap_range<span style="color: #666666">=</span>(<span style="color: #666666">0.15</span>, <span style="color: #666666">0.85</span>), return_fmt<span style="color: #666666">=</span><span style="color: #BA2121">&#39;hex&#39;</span>)
+    all_diverging_maps_hex<span style="color: #666666">.</span>append(<span style="color: #008000">cmp</span>)
+</pre></div>
+
+</ul>
+
+<h4>Format colormaps for Tableau</h4>
+
+<ul>
+At this stage, we need to format our colormaps in order to match the Tableau Preference file's style. The following code snippets transform a given colormap into the required format.
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># Get all the sequential colormaps in the format that is required in Tableau</span>
+
+<span style="color: #008000; font-weight: bold">for</span> i, hexes <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">enumerate</span>(all_sequential_maps_hex):
+    <span style="color: #008000; font-weight: bold">print</span>(<span style="color: #BA2121">&#39;&lt;color-palette name=&#39;</span><span style="color: #666666">+</span><span style="color: #BA2121">&#39;&quot;&#39;</span><span style="color: #666666">+</span><span style="color: #BA2121">&#39;{}&#39;</span><span style="color: #666666">.</span>format(sequential_colormap[i])<span style="color: #666666">+</span><span style="color: #BA2121">&#39;&quot; &#39;</span> <span style="color: #666666">+</span><span style="color: #BA2121">&#39;type=&quot;ordered-sequential&quot;&gt;&#39;</span>)
+    <span style="color: #008000; font-weight: bold">for</span> j, col <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">enumerate</span>(hexes):
+        <span style="color: #008000; font-weight: bold">print</span>(<span style="color: #BA2121">&#39;    &lt;color&gt;&#39;</span><span style="color: #666666">+</span><span style="color: #BA2121">&#39;{}&#39;</span><span style="color: #666666">.</span>format(hexes[j])<span style="color: #666666">+</span><span style="color: #BA2121">&#39;&lt;/color&gt;&#39;</span>)
+    <span style="color: #008000; font-weight: bold">print</span>(<span style="color: #BA2121">&#39;&lt;/color-palette&gt;&#39;</span>)
+</pre></div>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># Get all the diverging colormaps in the format that is required in Tableau</span>
+<span style="color: #008000; font-weight: bold">for</span> i, hexes <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">enumerate</span>(all_diverging_maps_hex):
+    <span style="color: #008000; font-weight: bold">print</span>(<span style="color: #BA2121">&#39;&lt;color-palette name=&#39;</span><span style="color: #666666">+</span><span style="color: #BA2121">&#39;&quot;&#39;</span><span style="color: #666666">+</span><span style="color: #BA2121">&#39;{}&#39;</span><span style="color: #666666">.</span>format(diverging_colormap[i])<span style="color: #666666">+</span><span style="color: #BA2121">&#39;&quot; &#39;</span> <span style="color: #666666">+</span><span style="color: #BA2121">&#39;type=&quot;ordered-diverging&quot;&gt;&#39;</span>)
+    <span style="color: #008000; font-weight: bold">for</span> j, col <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">enumerate</span>(hexes):
+        <span style="color: #008000; font-weight: bold">print</span>(<span style="color: #BA2121">&#39;    &lt;color&gt;&#39;</span><span style="color: #666666">+</span><span style="color: #BA2121">&#39;{}&#39;</span><span style="color: #666666">.</span>format(hexes[j])<span style="color: #666666">+</span><span style="color: #BA2121">&#39;&lt;/color&gt;&#39;</span>)
+    <span style="color: #008000; font-weight: bold">print</span>(<span style="color: #BA2121">&#39;&lt;/color-palette&gt;&#39;</span>)
+</pre></div>
+
+</ul>
+
+<h4>Make Tableau Preference file with obtained colormaps</h4>
+
+<ul>
+Our Tableau preference file should look like this:
+
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">&lt;<span style="border: 1px solid #FF0000">?</span>xml version=<span style="font-style: italic">&#39;1.0&#39;</span><span style="border: 1px solid #FF0000">?</span>&gt;
+
+&lt;workbook&gt;
+    &lt;preferences&gt;   
+    
+    
+    PLACE HERE THE OUTPUTS FROM THE COLORMAPS
+    
+    
+    &lt;/preferences&gt;
+&lt;/workbook&gt;
+</pre></div>
+
+
+
+</ul>
+
+<h4>An example of Tableau preference file with one diverging and one sequential colormap</h4>
+
+<ul>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">&lt;<span style="border: 1px solid #FF0000">?</span>xml version=<span style="font-style: italic">&#39;1.0&#39;</span><span style="border: 1px solid #FF0000">?</span>&gt;
+
+&lt;workbook&gt;
+    &lt;preferences&gt;  
+
+        &lt;color-palette name=<span style="font-style: italic">&quot;Pride&quot;</span> type=<span style="font-style: italic">&quot;ordered-diverging&quot;</span>&gt;
+            &lt;color&gt;<span style="font-style: italic">#160E28&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#2A194D&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#2C2D6D&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#22467B&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#1E5C7E&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#2C707E&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#42827E&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#5A947D&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#73A679&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#94B86E&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#B9C85C&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#E2D740&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#F9CD1E&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#F7AD0D&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#F08F0F&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#E6711C&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#D7562A&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#C63D37&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#B12543&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#980E4E&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#7C0154&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#5B0B4C&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#3B1035&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#1F0A1A&lt;/color&gt;</span>
+        &lt;/color-palette&gt;
+        
+        &lt;color-palette name=<span style="font-style: italic">&quot;Rainforest&quot;</span> type=<span style="font-style: italic">&quot;ordered-sequential&quot;</span>&gt;
+            &lt;color&gt;<span style="font-style: italic">#33034A&lt;/color&gt;</span>
+            &lt;color&gt;<span style="font-style: italic">#3A0161&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#3E0374&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#3E1086&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#392291&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#313193&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#254091&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#194B8E&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#0C5589&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#035F84&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#016781&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#036F7E&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#07787A&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#0B7F77&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#118772&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#188E6D&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#239665&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#329E5B&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#41A550&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#55AB41&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#6CB02E&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#83B419&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#9DB602&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#B2B811&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#C6BB2E&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#D6BF4A&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#E1C361&lt;/color&gt; </span>
+            &lt;color&gt;<span style="font-style: italic">#EDC87D&lt;/color&gt;</span>
+        &lt;/color-palette&gt;
+        
+    &lt;/preferences&gt;
+&lt;/workbook&gt;
+</pre></div>
+
+
+</ul>
+
+<h4>Tableau preferences file</h4>
+
+<ul>
+Save the <b>Preferences.tps</b> file and place it into your Tableau folder <b>My Tableau Repository</b> (that can be found in e.g. <b><i>Documents/My Tableau Repository</i></b>), and you will have all colormaps. 
+</ul>
+
+<ul>
+Here is the link to the <a href="https://github.com/rdzudzar/Tableau_Colormaps" target="_blank">GitHub repository</a>, entire Jupyter Notebook from this tutorial <a href="https://github.com/rdzudzar/Tableau_Colormaps/blob/master/Tableau_CMasher.ipynb" target="_blank">CMasher and Tableau</a> and <a href="https://github.com/rdzudzar/Tableau_Colormaps/blob/master/Preferences.tps" target="_blank">Preferences.tps</a> file containing all colormaps from CMasher version '1.5.0'. 
+</ul> 
+
+<h4>References</h4>
+<ul>
+<i>CMasher</i> (<cite><a href="https://joss.theoj.org/papers/10.21105/joss.02004"> Ellert van der Velden, 2020 </a></cite>)</ul>
+<ul> Code snippet HTML formatting was done with the use of <a href="https://github.com/alexkay/hilite.me" target="_blank">hilite.me</a> </ul>
+
+								</section>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section>
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Homepage</a></li>
+										<li><a href="research.html">Research</a></li>
+											<li>
+											<span class="opener">Projects</span>
+											<ul>
+												<li><a href="projects.html">Programming</a></li>
+												<li><a href="astroproject.html">Astronomy</a></li>
+											</ul>
+											</li>										<li><a href="visualizations.html">Visualizations</a></li>
+										<li><a href="coding_tutorials.html">Coding tutorials</a></li>
+
+									</ul>
+								</nav>
+
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Contact details</h2>
+									</header>
+									<p></p>
+									<ul class="contact">
+										<li class="icon solid fa-envelope"><a href="">robertdzudzar@gmail.com</a></li>
+										<li class="icon solid fa-phone">0468 935 723</li>
+
+									</ul>
+								</section>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Robert Dzudzar. All rights reserved. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
