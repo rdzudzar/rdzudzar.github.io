@@ -41,7 +41,7 @@
 									</ul>
 <h4>Export colormaps</h4>
 <ul>
-The following snippets of code can be used to export the colors from colormaps in HEX and tranform them into Tableau's style. The entire code (<a href="https://github.com/rdzudzar/Tableau_Colormaps" target="_blank">GitHub repository</a>) can be found in this Jupyter Notebook: <a href="https://github.com/rdzudzar/Tableau_Colormaps/blob/master/Tableau_CMasher.ipynb" target="_blank">CMasher and Tableau</a>, while the final Tableau preference file containing all colormaps can be found here <a href="https://github.com/rdzudzar/Tableau_Colormaps/blob/master/Preferences.tps" target="_blank">Preferences.tps</a>. Please see the <a href="https://cmasher.readthedocs.io/index.html" target="_blank"><i>CMasher</i></a> documentation for more details, especially how to use it in Python and how to cite it. 
+The following snippets of code can be used to export the colors from colormaps in HEX and tranform them into Tableau's style. The entire code (<a href="https://github.com/rdzudzar/Tableau_Colormaps" target="_blank">GitHub repository</a>) can be found in this Jupyter Notebook: <a href="https://github.com/rdzudzar/Tableau_Colormaps/blob/master/Tableau_CMasher.ipynb" target="_blank">CMasher and Tableau</a>, python script <a href="https://github.com/rdzudzar/Tableau_Colormaps/blob/master/cmasher_tableau.py" target="_blank">cmasher_tableau.py</a> while the final Tableau preference file containing all colormaps can be found here <a href="https://github.com/rdzudzar/Tableau_Colormaps/blob/master/Preferences.tps" target="_blank">Preferences.tps</a>. Please see the <a href="https://cmasher.readthedocs.io/index.html" target="_blank"><i>CMasher</i></a> documentation for more details, especially how to use it in Python and how to cite it. 
 
 
 <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># Import packages</span>
@@ -50,7 +50,7 @@ The following snippets of code can be used to export the colors from colormaps i
 
 </ul>
 
-<ul> Firstly we need to extract the names of all the colormaps and their type (whether they are seqyential or diverging), using <i>CMasher</i> functions.
+<ul> Firstly we need to extract the names of all the colormaps and their type (whether they are sequential or diverging), using <i>CMasher</i> functions.
 <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># Get colormaps</span>
 cmr<span style="color: #666666">.</span>cm<span style="color: #666666">.</span>cmap_d<span style="color: #666666">.</span>keys()
 </pre></div>
@@ -215,7 +215,7 @@ Save the <b>Preferences.tps</b> file and place it into your Tableau folder <b>My
 </ul>
 
 <ul>
-Here is the link to the <a href="https://github.com/rdzudzar/Tableau_Colormaps" target="_blank">GitHub repository</a>, entire Jupyter Notebook from this tutorial <a href="https://github.com/rdzudzar/Tableau_Colormaps/blob/master/Tableau_CMasher.ipynb" target="_blank">CMasher and Tableau</a> and <a href="https://github.com/rdzudzar/Tableau_Colormaps/blob/master/Preferences.tps" target="_blank">Preferences.tps</a> file containing all colormaps from CMasher version '1.5.0'. <b> To be noted, this preference file contains colormaps with range (0.15, 0.85), if you want the full range you will need to change that part of the code to (0, 1) and create new preference file. </b>
+Here is the link to the <a href="https://github.com/rdzudzar/Tableau_Colormaps" target="_blank">GitHub repository</a>, entire Jupyter Notebook from this tutorial <a href="https://github.com/rdzudzar/Tableau_Colormaps/blob/master/Tableau_CMasher.ipynb" target="_blank">CMasher and Tableau</a>, python script <a href="https://github.com/rdzudzar/Tableau_Colormaps/blob/master/cmasher_tableau.py" target="_blank">cmasher_tableau.py</a> and <a href="https://github.com/rdzudzar/Tableau_Colormaps/blob/master/Preferences.tps" target="_blank">Preferences.tps</a> file containing all colormaps from CMasher version '1.5.0'. <b> To be noted, this preference file contains colormaps with range (0.15, 0.85), if you want the full range you will need to change that part of the code to (0, 1) and create new preference file. </b>
 </ul> 
 
 <h4>Colormaps will appear in Tableau</h4>
