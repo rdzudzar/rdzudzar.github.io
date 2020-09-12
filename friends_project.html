@@ -33,15 +33,397 @@
 							<!-- Content -->
 								<section>
 									<header class="main">
-
-									<h2>Screenplay analysis and interactive exploration:</h2>
-
-									<li> Screenplay analysis. Using python, I performed a detailed analysis and interactive exploration of the TV show 'Friends' screenplay. The script is also available on my <a href="https://github.com/rdzudzar/friends_analysis" target="_blank">GitHub.</a>. Screenplay text is loaded in html format and converted into text format. Script performs text processing on a characted basis for each episode during the show. For interactive visuelization, Bokeh is used. Code is available on my github account. </li>
+									
+									<center>
+									<h2>Screenplay analysis and interactive exploration of TV-show:</h2>
+									<class="image main"><img src="images/Friends_name.jpg" width="500" alt="" />
+									</center>
+									<br></br>
+									<li> I performed a detailed analysis and interactive exploration of the TV show 'Friends' screenplay, using Python. The full script is available on my <a href="https://github.com/rdzudzar/friends_analysis" target="_blank">GitHub</a>, and here I show some code snippets and result of analysis. Below is an interactive visualization in Bokeh of the number of lines of each main Friend character throughout the series. </li>
 
 									<span class="image main"><img src="images/friends_interactive.gif" alt="" /></span>
 
 									</ul>
 
+
+									<h2>From raw screenplay to usable data:</h2>
+
+									I obtained the raw 'Friends' screenplay from <a href="https://github.com/fangj/friends" target="_blank">here</a>. Among raw files, there were two <i>.html</i> files that do not represent an official TV-show episode: <i>'07outtakes.html'</i> and <i>'0423uncut.html'</i>, so I removed them. In order to have data in the desired format for my analysis, I: 
+									<br></br>
+									i) Imported the <i>.html</i> files into python; 
+									<br>
+									ii) Converted files into text and; 
+									<br>
+									iii) Started with the data extraction for each main 'Friend' character.
+									<br></br>
+									Of course, raw data are not clean, so it was fun to find various formatting styles in order to extract all data. For example, in screenplay there is a notation of who's line it is (who is talking), and in this particular script we have most often lines that begin with: <b>**Name:**</b>. However, that is not always the case, sometimes there are <b>**</b> extra or missing (both, or only one side), <b>:</b> is on the other side, there is an empty space e.g. <b>: **</b>, and sometimes their names are shortened to a form: MNCA, RACH, JOEY, ROSS, CHAN, PHOE. In order to extract lines that each Friend character says in the show, I collect all the different formats in the function <b>def get_friend_line(friend_name, episode)</b>, a snippet of this code is shown below, and file that contains this function is <a href="https://github.com/rdzudzar/friends_analysis/blob/master/Friends_analysis.py" target="_blank">here</a>. 
+
+									<br></br>
+									<h4>Exporting lines:</h4>
+
+									<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># We have a list of Friend names</span>
+list_of_friends <span style="color: #666666">=</span> [<span style="color: #BA2121">&#39;**Monica:**&#39;</span>, <span style="color: #BA2121">&#39;**Rachel:**&#39;</span>, <span style="color: #BA2121">&#39;**Ross:**&#39;</span>, <span style="color: #BA2121">&#39;**Joey:**&#39;</span>, <span style="color: #BA2121">&#39;**Phoebe:**&#39;</span>, <span style="color: #BA2121">&#39;**Chandler:**&#39;</span>]
+
+<span style="color: #408080; font-style: italic"># For example, if we want to search for Monica&#39;s lines we use:</span>
+friend_name <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;**Monica:**&#39;</span>
+
+<span style="color: #408080; font-style: italic"># Search friend lines, b</span>
+searchquery <span style="color: #666666">=</span> friend_name
+    
+<span style="color: #408080; font-style: italic"># Get all the searchqueries, because script has a different text formatting. </span>
+searchqueries <span style="color: #666666">=</span> (searchquery, searchquery[<span style="color: #666666">2</span>:<span style="color: #666666">-3</span>]<span style="color: #666666">+</span><span style="color: #BA2121">&#39;**:&#39;</span>, searchquery[<span style="color: #666666">0</span>:<span style="color: #666666">-3</span>]<span style="color: #666666">+</span><span style="color: #BA2121">&#39;** :&#39;</span>,
+                     (searchquery[<span style="color: #666666">2</span>:<span style="color: #666666">-3</span>]<span style="color: #666666">+</span><span style="color: #BA2121">&#39;:&#39;</span>)<span style="color: #666666">.</span>upper(), searchquery[<span style="color: #666666">2</span>:<span style="color: #666666">6</span>]<span style="color: #666666">.</span>upper(),
+                     (searchquery[<span style="color: #666666">2</span>]<span style="color: #666666">+</span>searchquery[<span style="color: #666666">4</span>]<span style="color: #666666">+</span>searchquery[<span style="color: #666666">6</span>:<span style="color: #666666">8</span>])<span style="color: #666666">.</span>upper(),
+                     searchquery[<span style="color: #666666">2</span>:], <span style="color: #BA2121">&#39;**&#39;</span><span style="color: #666666">+</span>searchquery<span style="color: #666666">+</span><span style="color: #BA2121">&#39;**&#39;</span>, searchquery[<span style="color: #666666">2</span>:<span style="color: #666666">-3</span>]<span style="color: #666666">+</span><span style="color: #BA2121">&#39;: **&#39;</span>)
+</pre></div>
+
+									<br>
+									<h4>Exporting Titles:</h4>
+									In a similar way to extracting lines, we extract all Titles of the TV-show episodes. The function used is <b>def get_episode_title(episode):
+									</b> and it can be found <a href="https://github.com/rdzudzar/friends_analysis/blob/master/Friends_analysis.py" target="_blank">here</a>. Below is the snippet of the code to show which quetries are used and which are ignored in order to obtain the Titles: <br>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># Search for titles, most of them start with #, however, off course</span>
+<span style="color: #408080; font-style: italic"># There are lot of different formatings+</span>
+searchqueries <span style="color: #666666">=</span> (<span style="color: #BA2121">&#39;#&#39;</span>, <span style="color: #BA2121">&#39;The One&#39;</span>, <span style="color: #BA2121">&#39;9&#39;</span>, <span style="color: #BA2121">&#39;FRIENDS - THE ONE&#39;</span>, <span style="color: #BA2121">&#39;**The One&#39;</span>, <span style="color: #BA2121">&#39;10&#39;</span>)
+skipqueries <span style="color: #666666">=</span> (<span style="color: #BA2121">&#39;###&#39;</span>, <span style="color: #BA2121">&#39;## credits&#39;</span>, <span style="color: #BA2121">&#39;## friends&#39;</span>, <span style="color: #BA2121">&#39;# friends&#39;</span>)
+</pre></div>
+
+								<br>
+								<h4>Episodes and Counting Lines:</h4>
+
+								In script <a href="https://github.com/rdzudzar/friends_analysis/blob/master/Friends_analysis.py" target="_blank">Friends_analysis.py</a> there are several functions that I created in order to extract lines of a Friend character for each episode. I find interesting seeing how number of lines for each Friend character changes with Series. In order to do that, I find number of lines for each friend in each episode and calculate rolling mean (and sum) for each season. See function below for an example, while all functions are <a href="https://github.com/rdzudzar/friends_analysis/blob/master/correlation_plots.py" target="_blank">here</a>
+
+
+								<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">running_mean</span>():
+    
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Compute running means for a season based length of the number</span>
+<span style="color: #BA2121; font-style: italic">    of lines - for each Friend.</span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    Returns</span>
+<span style="color: #BA2121; font-style: italic">    -------</span>
+<span style="color: #BA2121; font-style: italic">    means - List of 6 lists containing the averages lines per season.</span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>    
+    
+    means <span style="color: #666666">=</span> []
+    counts <span style="color: #666666">=</span> np<span style="color: #666666">.</span>array([<span style="color: #666666">0</span>, <span style="color: #666666">*</span>np<span style="color: #666666">.</span>cumsum(num_episodes)])
+    
+    <span style="color: #008000; font-weight: bold">for</span> friend <span style="color: #AA22FF; font-weight: bold">in</span> friend_lines:
+        mean <span style="color: #666666">=</span> []
+        <span style="color: #008000; font-weight: bold">for</span> i, j <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">zip</span>(counts[:<span style="color: #666666">-1</span>], counts[<span style="color: #666666">1</span>:]):
+            mean<span style="color: #666666">.</span>append(np<span style="color: #666666">.</span>average(df_counted[friend][i:j]))
+            
+        means<span style="color: #666666">.</span>append(mean)
+
+    <span style="color: #008000; font-weight: bold">return</span>(means)
+</pre></div>
+
+							<br></br>
+							<h3>Number of lines:</h3>
+											<div class="box alt">
+															
+												
+												<div class="row gtr-50 gtr-uniform">
+															<!-- Break -->
+													Here I show an average number of lines per season. Phoebe has the lowest number of lines, although her lines are increasing with time (top Figure). It is also interesting, that Chandler has large sudden drop in the number of lines in season 8. Of course, an average lines have a large scatter, as shown at the Bottom Figure.
+
+													<div class="col-8"><span class="image fit"><img src="images/mean_lines.png" alt="" /> </span> </div>
+
+													<br></br>
+													<div class="col-8"><span class="image fit"><img src="images/lines_scatter.png" alt="" /> </span> </div>
+
+												
+												</div>
+											</div>
+
+										Using interactive exploration and number of lines, I find that there are several outliers in the individual episodes (to be noted that each of the two-part episode is in the one file, thus considered as a single episode) e.g. certain Friend characters have only a few lines in some of the episodes: 
+										<br></br>
+
+								<div class="row">
+											<div class="col-6 col-12-small">
+												<h5>Least lines:</h5>
+
+										<b>Monica</b> has <b>only 4 lines</b> in S06E23 'The one with the ring', and 8 lines in S08E19 'The One with Joey's Interview'. <br>
+										
+										<b>Rachel</b> has only 10 lines in two episodes: S04E18 'The One Where Chandler Crosses the Line' and S09E15 'The One With the Mugging'. <br>
+
+										<b>Ross</b> has <b>only 4 lines</b> in S04E03 ('The One With The Cuffs'), although in this episode he has one more line (saying 'Hey') that he says at the same time with Joey and Rachel. <br>
+
+										<b>Pheobe</b> has 10 lines in 2 episodes S01E06 and S04E21 ('The One with the Butt' and 'The One With the Invitation'). <br>
+
+										<b>Chandler</b> has two consecutive episodes where he has only 9 and 10 lines, S07E18 and S07E19 ('The One With Joey's Award' and 'The One with Ross and Monica's Cousin').<br>
+
+										<b>Joey</b> has only 8 lines in the beginning of the show, in S01E02. 
+
+										<br></br>
+												
+											</div>
+											
+											<div class="col-6 col-12-small">
+												<h5>Most lines:</h5>
+										
+										<b>Monica</b> S06E15 and S06E25 ('The One That Could Have Been' and 'The One with the Proposal'), respectively with 93 and 92 lines. <br>
+
+										<b>Rachel</b> S08E23 'The One Where Rachel Has a Baby', a two part episode, with 108 lines. <br>
+										
+										<b>Ross</b> has the most lines in the last episode 'The Last One' with 112 lines. <br>
+										
+										<b>Pheobe</b> S05E23 has 87 lines in 'The One in Vegas' (two part episode). <br>
+										
+										<b>Chandler</b> has 100 lines in S05E23 and <b>absolute maximum of 118 lines</b> in S09E10 'The One With Christmas in Tulsa'. <br>
+										
+										<b>Joey</b> reaches maximum of 95 lines in S08E19 'The One with Joey's Interview', and 93 in S09E23 'The one in Barbados'.
+
+										<br></br>
+											</div>
+									</div>
+
+										<h3>Openning scene:</h3>
+											<div class="box alt">
+															
+												
+												<div class="row gtr-50 gtr-uniform">
+															<!-- Break -->
+													I was curious to see who is apearing the most, and having the most amount of lines in the openning scenes. Function exporting openning scene lines was fun to make, since it also involved quering phrases and looking into different formatings. After extraction of the openning scenes, we again performed extraction of Friends lines, as in the first example. Below is a function that extracts openning scenes from each episode:
+
+
+													<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;  word-wrap:normal; height:20em; border:solid gray;border-width:.1em .1em .1em .4em; padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">episode_intro</span>(all_episodes_in_a_season_txt):
+    
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Get the lines before opening credits in the show. </span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    Parameters</span>
+<span style="color: #BA2121; font-style: italic">    ----------</span>
+<span style="color: #BA2121; font-style: italic">    all_episodes_in_a_season_txt - A list containing text of all episodes.</span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    Returns</span>
+<span style="color: #BA2121; font-style: italic">    -------</span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    intro_count - Alist of texts which containg lines from each</span>
+<span style="color: #BA2121; font-style: italic">                episode before opening credits. </span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    
+    intro_count <span style="color: #666666">=</span> []
+    monica_pre_credits <span style="color: #666666">=</span> []
+    
+    opening_credits <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;**Opening Credits**&#39;</span>
+    <span style="color: #008000; font-weight: bold">for</span> i, each_ep <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">enumerate</span>(all_episodes_in_a_season_txt):
+        
+        <span style="color: #408080; font-style: italic"># There are plenty formatings for &quot;Opening Credits&quot;, fine all of them and replace them with the most used ones</span>
+        replace_each_ep <span style="color: #666666">=</span> each_ep<span style="color: #666666">.</span>replace(<span style="color: #BA2121">&#39;### Opening Credits&#39;</span>, opening_credits)<span style="color: #666666">.</span>replace(<span style="color: #BA2121">&#39;Opening Credits**&#39;</span>, 
+                        opening_credits)<span style="color: #666666">.</span>replace(<span style="color: #BA2121">&#39;**OPENING TITLES**&#39;</span>, opening_credits)<span style="color: #666666">.</span>replace(<span style="color: #BA2121">&#39;OPENING TITLES&#39;</span>, 
+                        opening_credits)<span style="color: #666666">.</span>replace(<span style="color: #BA2121">&#39;## Credits&#39;</span>, opening_credits)<span style="color: #666666">.</span>replace(<span style="color: #BA2121">&#39;OPENING CREDITS&#39;</span>,
+                        opening_credits)<span style="color: #666666">.</span>replace(<span style="color: #BA2121">&#39;Opening Credits&#39;</span>, opening_credits)<span style="color: #666666">.</span>replace(<span style="color: #BA2121">&#39;**Opening credits.**&#39;</span>,
+                        opening_credits)<span style="color: #666666">.</span>replace(<span style="color: #BA2121">&#39;Opening credits&#39;</span>, opening_credits)<span style="color: #666666">.</span>replace(<span style="color: #BA2121">&#39;OPENING SEQUENCE&#39;</span>,
+                        opening_credits)<span style="color: #666666">.</span>replace(<span style="color: #BA2121">&#39;[INTRO]&#39;</span>, opening_credits)
+
+        <span style="color: #408080; font-style: italic"># Check if the phrase &quot;**Opening Credits**&quot; is in the text </span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #BA2121">&#39;**Opening Credits**&#39;</span> <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #AA22FF; font-weight: bold">in</span> replace_each_ep:
+            <span style="color: #008000; font-weight: bold">print</span>(i)
+        
+        <span style="color: #408080; font-style: italic"># For now skip episodes which don&#39;t have opening credits</span>
+        <span style="color: #408080; font-style: italic"># written in the text -- Rob: check if ep. has them at all           </span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #BA2121">&#39;**Opening Credits**&#39;</span> <span style="color: #AA22FF; font-weight: bold">in</span> replace_each_ep:     
+                  
+            get_intro <span style="color: #666666">=</span> replace_each_ep<span style="color: #666666">.</span>split(<span style="color: #BA2121">&#39;**Opening Credits**&#39;</span>)[<span style="color: #666666">0</span>]
+        
+            <span style="color: #408080; font-style: italic"># Remove text within [] and () brackets. These lines are scene description.</span>
+            one_intro_tmp <span style="color: #666666">=</span> re<span style="color: #666666">.</span>sub( <span style="color: #BA2121">&quot;\[[^\]]*\]&quot;</span>, <span style="color: #BA2121">&quot;&quot;</span>, get_intro) <span style="color: #408080; font-style: italic"># Removes []</span>
+            intro_clear <span style="color: #666666">=</span> re<span style="color: #666666">.</span>sub(<span style="color: #BA2121">&#39;\([^)]*\)&#39;</span>, <span style="color: #BA2121">&quot;&quot;</span>,one_intro_tmp) <span style="color: #408080; font-style: italic"># Removes ()</span>
+ 
+            intro_count<span style="color: #666666">.</span>append(intro_clear <span style="color: #666666">+</span> os<span style="color: #666666">.</span>linesep)
+            
+            <span style="color: #408080; font-style: italic"># Saves all outputs into separate txt file</span>
+            <span style="color: #008000; font-weight: bold">with</span> <span style="color: #008000">open</span>(<span style="color: #BA2121">&#39;./pre_credits/pre_credits_{0:03d}.txt&#39;</span><span style="color: #666666">.</span>format(i), <span style="color: #BA2121">&#39;w&#39;</span>, encoding<span style="color: #666666">=</span><span style="color: #BA2121">&#39;utf-8&#39;</span>) <span style="color: #008000; font-weight: bold">as</span> f1:
+                f1<span style="color: #666666">.</span>write(intro_clear <span style="color: #666666">+</span> os<span style="color: #666666">.</span>linesep)
+
+        <span style="color: #008000; font-weight: bold">else</span>:
+            <span style="color: #008000; font-weight: bold">continue</span>
+         
+            
+    <span style="color: #408080; font-style: italic">#print(intro_count[42][0:2600])</span>
+    <span style="color: #008000; font-weight: bold">print</span>(<span style="color: #008000">len</span>(intro_count))    
+    <span style="color: #008000; font-weight: bold">return</span> intro_count 
+</pre></div>
+
+										<br></br>
+
+
+
+													<div class="col-8"><span class="image fit"><img src="images/Openning.gif" alt="" /> </span> </div>
+
+												
+												</div>
+											</div>
+
+							I find that Ross was the most absent from the openning scenes as he didn't have lines in the openning scene 93 times. While, Chandler didn't have lines in the openning scene only 52 times. All functions for openning scenes analysis can be found <a href="https://github.com/rdzudzar/friends_analysis/blob/master/Friend_frequencies.py" target="_blank">here.</a>
+
+						<br></br>
+						<h3>Word clouds:</h3>
+						Exploring word clouds, I find that it can be roughly used to see if there is a quest character in the episode and which one it is. For creating word clouds I use python package <a href="https://github.com/amueller/word_cloud
+						" target="_blank">wordcloud.</a> When making wordclouds I exclude Friends names and 'Scene', 'Oh', 'Ok', 'Okay' words, since they do repeat quite a lot. Code that generates wordcloud is shown below, while all functions can be found <a href="https://github.com/rdzudzar/friends_analysis/blob/master/Plot_friends_analysis.py
+						" target="_blank">here.</a>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">wordcloud <span style="color: #666666">=</span> WordCloud(width<span style="color: #666666">=</span>width, height<span style="color: #666666">=</span>height, background_color<span style="color: #666666">=</span>bck_color, 
+                          min_font_size<span style="color: #666666">=</span>min_font_size, stopwords<span style="color: #666666">=</span>stopwords, colormap <span style="color: #666666">=</span> colourmap,
+                         relative_scaling<span style="color: #666666">=</span>relative_scaling, collocations<span style="color: #666666">=</span>collocations)<span style="color: #666666">.</span>generate(episode)
+    
+    
+plt<span style="color: #666666">.</span>figure(figsize<span style="color: #666666">=</span>(<span style="color: #666666">15</span>,<span style="color: #666666">15</span>))
+        
+plt<span style="color: #666666">.</span>imshow(wordcloud, interpolation<span style="color: #666666">=</span><span style="color: #BA2121">&quot;bilinear&quot;</span>)
+plt<span style="color: #666666">.</span>axis(<span style="color: #BA2121">&quot;off&quot;</span>)
+</pre></div>
+
+						With this setup:
+
+						<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># Define parameters for wordcloud</span>
+max_font_size <span style="color: #666666">=</span> <span style="color: #666666">100</span>
+min_font_size <span style="color: #666666">=</span> <span style="color: #666666">20</span>
+bck_color <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;white&#39;</span>
+width<span style="color: #666666">=1600</span>
+height<span style="color: #666666">=800</span>
+colourmap <span style="color: #666666">=</span> plt<span style="color: #666666">.</span>cm<span style="color: #666666">.</span>cividis_r
+relative_scaling <span style="color: #666666">=</span> <span style="color: #666666">1</span> <span style="color: #408080; font-style: italic"># relative_scaling == 1.0 means frequency dictates font-size -&gt; Hides low-frequency words</span>
+                   
+collocations <span style="color: #666666">=</span> <span style="color: #008000">False</span> <span style="color: #408080; font-style: italic"># if true, it will group phrases; if false it will take single words</span>
+</pre></div>
+
+
+
+						<br></br>
+						<h4>Word clouds for the First season</h4>
+
+													<div class="box alt">
+														<div class="row gtr-50 gtr-uniform">
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (0).png" alt="" /> <center>Episode 1</center> </span> </div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (1).png" alt="" /> <center>Episode 2</center> </span></div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (2).png" alt="" /> <center>Episode 3</center> </span></div>
+															<!-- Break -->
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (3).png" alt="" /> <center>Episode 4</center> </span></div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (4).png" alt="" /> <center>Episode 5</center> </span></div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (5).png" alt="" /> <center>Episode 6</center> </span></div>
+															<!-- Break -->
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (6).png" alt="" /> <center>Episode 7</center> </span></div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (7).png" alt="" /> <center>Episode 8</center> </span></div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (8).png" alt="" /> <center>Episode 9</center> </span></div>
+													<!-- Break -->
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (9).png" alt="" /> <center>Episode 10</center> </span></div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (10).png" alt="" /> <center>Episode 11</center> </span></div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (11).png" alt="" /> <center>Episode 12</center> </span></div>
+													<!-- Break -->
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (12).png" alt="" /> <center>Episode 13</center> </span></div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (13).png" alt="" /> <center>Episode 14</center> </span></div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (14).png" alt="" /> <center>Episode 15</center> </span></div>
+													<!-- Break -->
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (15).png" alt="" /> <center>Episode 16</center> </span></div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (16).png" alt="" /> <center>Episode 17</center> </span></div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (17).png" alt="" /> <center>Episode 18</center> </span></div>
+													<!-- Break -->
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (18).png" alt="" /> <center>Episode 19</center> </span></div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (19).png" alt="" /> <center>Episode 20</center> </span></div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (20).png" alt="" /> <center>Episode 21</center> </span></div>
+													<!-- Break -->
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (21).png" alt="" /> <center>Episode 22</center> </span></div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (22).png" alt="" /> <center>Episode 23</center> </span></div>
+															<div class="col-3"><span class="image fit"><img src="images/S01/Figure 2020-09-12 103317 (23).png" alt="" /> <center>Episode 24</center> </span></div>
+												</div>
+
+							<br></br>
+							<h3>Making interactive Figures with Bokeh:</h3>
+
+							I use python package <a href="https://docs.bokeh.org/en/latest/index.html" target="_blank">Bokeh</a> - an interactive visualization library, to make interactive Figures. A function that created the interactive Figure (shown at the top of the page) is shown below. Here I need to define our data source, <b>ColumnDataSource</b>, in this case it is the <b>Number of lines</b> of each Friend character. I also define <b>HoverTool</b> because I want to show Episode and its Title when I hover over the Figure. Next I create <b>figure</b> and interactive tools which I want to have, in this case <b>"pan,wheel_zoom,box_zoom,reset"</b>. Additional options that I place is <b>p.line</b> where I define how the line will appear when its not active, or when its active (when I click on the legend item). While, <b>p.vbar</b> is defined to show season delimiter. In <a href="https://github.com/rdzudzar/friends_analysis/blob/master/Friends_bokeh.py" target="_blank">thi python file</a> I have other, similar functions for interactive eploration. 
+
+							<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto; word-wrap:normal; height:20em; border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">make_bokeh_correlation_numline_plot</span>():
+    
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Interactive plots showing counts of the Number of lines of </span>
+<span style="color: #BA2121; font-style: italic">    each friend per episode throughout the entire series. The plot</span>
+<span style="color: #BA2121; font-style: italic">    shows season number and the line dividing seasons.</span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    If clicked on a Friend in a character in the legend, it will</span>
+<span style="color: #BA2121; font-style: italic">    highlight the data of that friend. On hover - number of episode</span>
+<span style="color: #BA2121; font-style: italic">    and the name of the episode is shown.</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    
+    source <span style="color: #666666">=</span> ColumnDataSource(
+        data<span style="color: #666666">=</span><span style="color: #008000">dict</span>(
+            x<span style="color: #666666">=</span>df_counted<span style="color: #666666">.</span>index,
+            monica<span style="color: #666666">=</span>df_counted[<span style="color: #BA2121">&#39;NumLinesMon&#39;</span>],
+            rachel<span style="color: #666666">=</span>df_counted[<span style="color: #BA2121">&#39;NumLinesRac&#39;</span>],
+            phoebe<span style="color: #666666">=</span>df_counted[<span style="color: #BA2121">&#39;NumLinesPho&#39;</span>],
+            joey<span style="color: #666666">=</span>df_counted[<span style="color: #BA2121">&#39;NumLinesJoe&#39;</span>],
+            chandler<span style="color: #666666">=</span>df_counted[<span style="color: #BA2121">&#39;NumLinesCha&#39;</span>],
+            ross<span style="color: #666666">=</span>df_counted[<span style="color: #BA2121">&#39;NumLinesRos&#39;</span>],
+            episode <span style="color: #666666">=</span> df_only_sorry[<span style="color: #BA2121">&#39;Titles&#39;</span>],
+        )
+    ) 
+
+
+    hover <span style="color: #666666">=</span> HoverTool(
+        tooltips<span style="color: #666666">=</span>[
+            (<span style="color: #BA2121">&quot;Episode&quot;</span>, <span style="color: #BA2121">&quot;$index&quot;</span>),
+            (<span style="color: #BA2121">&quot;Title&quot;</span>, <span style="color: #BA2121">&quot;@episode&quot;</span>)
+        ]
+    )
+    
+
+    p <span style="color: #666666">=</span> figure(plot_width<span style="color: #666666">=1500</span>, plot_height<span style="color: #666666">=800</span>, tools<span style="color: #666666">=</span>[hover, <span style="color: #BA2121">&quot;pan,wheel_zoom,box_zoom,reset&quot;</span>])
+    p<span style="color: #666666">.</span>title<span style="color: #666666">.</span>text <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;Click on a Friend, Series analysis&#39;</span>
+
+    x_corr <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;x&#39;</span>
+    
+    p<span style="color: #666666">.</span>vbar(season_delim, top<span style="color: #666666">=</span>num_delim_lines, width<span style="color: #666666">=0.2</span>, color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;purple&#39;</span>, legend<span style="color: #666666">=</span><span style="color: #BA2121">&#39;&#39;</span>)   
+    
+    p<span style="color: #666666">.</span>line(x_corr,<span style="color: #BA2121">&#39;monica&#39;</span>, source<span style="color: #666666">=</span>source, line_width<span style="color: #666666">=4</span>, color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;lightgrey&#39;</span>, 
+       alpha<span style="color: #666666">=0.4</span>, muted_color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;#8c510a&#39;</span>, muted_alpha<span style="color: #666666">=1</span>, legend<span style="color: #666666">=</span><span style="color: #BA2121">&#39;Monica&#39;</span>)
+        
+    p<span style="color: #666666">.</span>line(x_corr, <span style="color: #BA2121">&#39;rachel&#39;</span>, source<span style="color: #666666">=</span>source, line_width<span style="color: #666666">=4</span>, color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;lightgrey&#39;</span>, 
+       alpha<span style="color: #666666">=0.4</span>, muted_color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;#01665e&#39;</span>, muted_alpha<span style="color: #666666">=1</span>, legend<span style="color: #666666">=</span><span style="color: #BA2121">&#39;Rachel&#39;</span>)
+
+    p<span style="color: #666666">.</span>line(x_corr, <span style="color: #BA2121">&#39;phoebe&#39;</span>, source<span style="color: #666666">=</span>source, line_width<span style="color: #666666">=4</span>, color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;lightgrey&#39;</span>, 
+       alpha<span style="color: #666666">=0.4</span>, muted_color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;#c51b7d&#39;</span>, muted_alpha<span style="color: #666666">=1</span>, legend<span style="color: #666666">=</span><span style="color: #BA2121">&#39;Phoebe&#39;</span>)
+ 
+    p<span style="color: #666666">.</span>line(x_corr, <span style="color: #BA2121">&#39;joey&#39;</span>, source<span style="color: #666666">=</span>source, line_width<span style="color: #666666">=4</span>, color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;lightgrey&#39;</span>, 
+       alpha<span style="color: #666666">=0.4</span>, muted_color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;#4d4d4d&#39;</span>, muted_alpha<span style="color: #666666">=1</span>, legend<span style="color: #666666">=</span><span style="color: #BA2121">&#39;Joey&#39;</span>)
+    
+    p<span style="color: #666666">.</span>line(x_corr, <span style="color: #BA2121">&#39;chandler&#39;</span>, source<span style="color: #666666">=</span>source, line_width<span style="color: #666666">=4</span>, color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;lightgrey&#39;</span>, 
+       alpha<span style="color: #666666">=0.4</span>, muted_color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;#762a83&#39;</span>, muted_alpha<span style="color: #666666">=1</span>, legend<span style="color: #666666">=</span><span style="color: #BA2121">&#39;Chandler&#39;</span>)
+
+    p<span style="color: #666666">.</span>line(x_corr, <span style="color: #BA2121">&#39;ross&#39;</span>, source<span style="color: #666666">=</span>source, line_width<span style="color: #666666">=4</span>, color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;lightgrey&#39;</span>, 
+       alpha<span style="color: #666666">=0.4</span>, muted_color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;#b2182b&#39;</span>, muted_alpha<span style="color: #666666">=1</span>, legend<span style="color: #666666">=</span><span style="color: #BA2121">&#39;Ross&#39;</span>)
+
+    x_positions <span style="color: #666666">=</span> [<span style="color: #666666">7</span>, <span style="color: #666666">29.5</span>, <span style="color: #666666">53.5</span>, <span style="color: #666666">78.5</span>, <span style="color: #666666">99.5</span>, <span style="color: #666666">123.5</span>, <span style="color: #666666">146.5</span>, <span style="color: #666666">168.5</span>, <span style="color: #666666">192.5</span>, <span style="color: #666666">211.5</span>]
+    season_num <span style="color: #666666">=</span> [<span style="color: #666666">1</span>, <span style="color: #666666">2</span>, <span style="color: #666666">3</span>, <span style="color: #666666">4</span>, <span style="color: #666666">5</span>, <span style="color: #666666">6</span>, <span style="color: #666666">7</span>, <span style="color: #666666">8</span>, <span style="color: #666666">9</span>, <span style="color: #666666">10</span>]
+    <span style="color: #008000; font-weight: bold">for</span> i, each_label <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">enumerate</span>(x_positions):
+        mytext <span style="color: #666666">=</span> Label(x<span style="color: #666666">=</span>each_label, y<span style="color: #666666">=0</span>, text<span style="color: #666666">=</span><span style="color: #BA2121">&#39;Season {0}&#39;</span><span style="color: #666666">.</span>format(season_num[i]),
+                       border_line_color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;black&#39;</span>, border_line_alpha<span style="color: #666666">=0.5</span>,text_font_size<span style="color: #666666">=</span><span style="color: #BA2121">&quot;13pt&quot;</span>)
+        p<span style="color: #666666">.</span>add_layout(mytext)   
+    
+    
+    p<span style="color: #666666">.</span>legend<span style="color: #666666">.</span>orientation <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;horizontal&quot;</span>
+    p<span style="color: #666666">.</span>legend<span style="color: #666666">.</span>location <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;top_center&quot;</span>
+    p<span style="color: #666666">.</span>legend<span style="color: #666666">.</span>click_policy<span style="color: #666666">=</span><span style="color: #BA2121">&quot;mute&quot;</span>
+
+    <span style="color: #408080; font-style: italic"># Define axis labels and properties</span>
+
+    p<span style="color: #666666">.</span>xaxis<span style="color: #666666">.</span>axis_label <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;Episode&#39;</span>
+    p<span style="color: #666666">.</span>yaxis<span style="color: #666666">.</span>axis_label <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;Number of Lines&#39;</span>
+
+    p<span style="color: #666666">.</span>xaxis<span style="color: #666666">.</span>axis_label_text_font_size <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;15pt&quot;</span>
+    p<span style="color: #666666">.</span>yaxis<span style="color: #666666">.</span>axis_label_text_font_size <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;15pt&quot;</span>
+
+    p<span style="color: #666666">.</span>title<span style="color: #666666">.</span>text_font_size <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;18pt&#39;</span>
+    p<span style="color: #666666">.</span>xaxis<span style="color: #666666">.</span>major_label_text_font_size <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;15pt&quot;</span>
+    p<span style="color: #666666">.</span>yaxis<span style="color: #666666">.</span>major_label_text_font_size <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;15pt&quot;</span>
+    p<span style="color: #666666">.</span>legend<span style="color: #666666">.</span>label_text_font_size <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;20pt&#39;</span>
+
+    show(p)
+</pre></div>
+
+
+													
 
 								</section>
 
