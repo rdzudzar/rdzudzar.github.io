@@ -1,0 +1,263 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Coding Projects</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="" class="logo"><strong>Sonification</strong> by Robert Džudžar and Niko Šarčević</a>
+									<ul class="icons">
+										<li><a href="https://www.linkedin.com/in/robertdzudzar/" target="_blank" class="icon brands fa-linkedin"></a></li>
+										<li><a href="https://github.com/rdzudzar" target="_blank" class="icon brands fa-github"></a></li>
+										<li><a href="https://twitter.com/robertdzudzar" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+									</ul>
+
+								</header>
+Proofreader/editor/tester: Niko Šarčević
+<ul class="icons">
+	<li><a href="https://github.com/nikosarcevic" target="_blank" class="icon brands fa-github"></a></li>
+	<li><a href="https://twitter.com/NikoSarcevic" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+	<li><a href="https://nikosarcevic.com" target="_blank" class="fas fa-th	"></a></li>
+</ul>
+							<!-- Content -->
+								<section>
+									<header class="main">
+									<h2>Using Astronify to sonify galaxy data</h2>
+
+									<ul>
+									<a href="https://astronify.readthedocs.io/en/latest/astronify/index.html#" target="_blank">Astronify</a> is a great tool to make data accessible to people with impaired vision. Main idea for this project is to build a small project within a Jupyter Notebook to sonify examples of Atomic Hydrogen spectrum - for an individual galaxy and for a galaxy group - and here it is :)									
+									<br>
+									<br>
+									The entire Jupyter Notebook and the data are accessible
+									<a href="https://github.com/rdzudzar/Sonify" target="_blank">here</a></h3>
+									<br>
+									<br>
+
+									<h3>Project overview</h3>
+
+
+Without going into too many details, we can say that a galaxy is composed out of stars, dust, gas and dark matter. The gaseous component in spiral galaxies is most often the Atomic  Hydrogen (HI). This gas represents galaxy's reservoir from which it can form new stars in the future.
+
+The overall shape of 21 cm spectral line indicates motion and distribution of the gas, and the width of the line represents Doppler broadening (check <a href="https://en.wikipedia.org/wiki/Doppler_effect" target="_blank">Doppler effect</a> due to the rotation of the galaxy. Therefore, we can roughly say that we are observing how gas in the galaxy rotates (ignoring e.g. projection effects due to inclination)! Moreover, we will also show here not just how it looks like, but also, how we can hear it! <br>
+<br>
+Play Sound below images :)
+
+<br></br>
+
+	<h3>Example for galaxy ESO153-G017</h3>
+
+									<span class="col-8"><img src="sonification/DoubleHorn.png" alt="" /></span>
+									<br> 
+										<audio controls> 
+										<source src="sonification/G1.mp3" type="audio/mpeg">
+										</audio>
+									<br>
+									<br>
+
+<h3>Code that sonified data looks like this</h3>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># Astronify import</span>
+<span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">astronify.series</span> <span style="color: #008000; font-weight: bold">import</span> SoniSeries
+<span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">astropy.table</span> <span style="color: #008000; font-weight: bold">import</span> Table
+
+<span style="color: #408080; font-style: italic"># General import</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">numpy</span> <span style="color: #008000; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">np</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">matplotlib.pyplot</span> <span style="color: #008000; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">plt</span>
+
+<span style="color: #408080; font-style: italic"># Galaxy data</span>
+G1_channel, G1_velocity, G1_flux <span style="color: #666666">=</span> np<span style="color: #666666">.</span>loadtxt(<span style="color: #BA2121">&#39;g1&#39;</span>, unpack<span style="color: #666666">=</span><span style="color: #008000">True</span>)
+
+<span style="color: #408080; font-style: italic"># Placing data into input Table</span>
+<span style="color: #408080; font-style: italic"># We will place our Velocity information as a &#39;time&#39; input</span>
+data_table <span style="color: #666666">=</span> Table({<span style="color: #BA2121">&quot;time&quot;</span>: G1_velocity[(G1_velocity<span style="color: #666666">&gt;6320</span>) <span style="color: #666666">&amp;</span> (G1_velocity<span style="color: #666666">&lt;6710</span>)], 
+                    <span style="color: #BA2121">&quot;flux&quot;</span>: G1_flux[(G1_velocity<span style="color: #666666">&gt;6320</span>) <span style="color: #666666">&amp;</span> (G1_velocity<span style="color: #666666">&lt;6710</span>)]})
+<span style="color: #408080; font-style: italic"># Sonify the data</span>
+soni_obj <span style="color: #666666">=</span> SoniSeries(data_table)
+soni_obj<span style="color: #666666">.</span>note_spacing <span style="color: #666666">=</span> <span style="color: #666666">0.07</span> <span style="color: #408080; font-style: italic"># Speed of the played sound, increase number to slow it down</span>
+soni_obj<span style="color: #666666">.</span>sonify()
+<span style="color: #408080; font-style: italic"># Play</span>
+soni_obj<span style="color: #666666">.</span>play()
+</pre></div>
+
+
+<br>
+<br>
+<h3>Example for galaxy ESO153-IG016 - Assymetric profile</h3>
+
+									<span class="col-8"><img src="sonification/Assymetric.png" alt="" /></span>
+									<br>
+										<audio controls> 
+										<source src="sonification/G2.mp3" type="audio/mpeg">
+										</audio>
+
+									<br>
+									<br>
+
+
+<h3>We can sonify Atomic Hydrogen spectra for each detected galaxy in the group</h3>
+
+In this example, we are sonifying the galaxy group `HIPASS J0205-55` and its sub-groups. Mapping this group with the Australia Telescope Compact Array, we found Atomic Hydrogen emission in 5 galaxies.
+<br>
+<br>
+									<span class="col-8"><img src="sonification/Group.png" alt="" /></span>
+									<br>
+										<audio controls> 
+										<source src="sonification/GroupSound.m4a" type="audio/mpeg">
+										</audio>
+
+<h3>JUST WOW!</h3>
+
+We notice (HEAR!) that the signal from the galaxies does not appear at the same time - that is because every galaxy is at a different distance in a group. In other words, the point where the signal from the galaxy appears is both visualised and sonified! <br>
+<br>
+
+At first, we can hear two galaxies (G4 and G5) rougly at the same time. Next, as the sound progresses we hear one high pitch noise - signaling a new galaxy (G2) and then yet another high-pitch signal - another galaxy (G3)! We can then hear the background noise for a bit, as the next galaxy is a bit further away. Finally we get to hear the highest-pitch sound which comes from the galaxy G! in the plot. <br>
+<br>
+
+As you probably noticed, noise has a low-pitch sound, and with the increase of the Atomic Hydrogen Flux in a galaxy (within this galaxy group), galaxy will produce a higher-pitch tone. 
+<br>
+<br>
+
+									<h2>Animation example</h2>
+
+									We can also combine visual and sound properties and make an animation like this:
+<br>
+<br>
+									<video controls>
+									<source src="sonification/AnimatedSoundG1HI.mp4" type="video/mp4">
+									</video>
+<br>
+<br>
+<h3>Code that generated animation</h3>
+
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:70em; height:20em; border:solid gray;border-width:.1em .1em .1em .4em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># Astronify import</span>
+<span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">astronify.series</span> <span style="color: #008000; font-weight: bold">import</span> SoniSeries
+<span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">astropy.table</span> <span style="color: #008000; font-weight: bold">import</span> Table
+
+<span style="color: #408080; font-style: italic"># General import</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">numpy</span> <span style="color: #008000; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">np</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">matplotlib.pyplot</span> <span style="color: #008000; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">plt</span>
+
+<span style="color: #408080; font-style: italic">#from matplotlib.animation import FuncAnimation</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">matplotlib.animation</span> <span style="color: #008000; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">animation</span>
+<span style="color: #666666">%</span>matplotlib notebook
+
+<span style="color: #408080; font-style: italic">#Galaxy data</span>
+G1_channel, G1_velocity, G1_flux <span style="color: #666666">=</span> np<span style="color: #666666">.</span>loadtxt(<span style="color: #BA2121">&#39;g1&#39;</span>, unpack<span style="color: #666666">=</span><span style="color: #008000">True</span>)
+
+duration <span style="color: #666666">=</span> <span style="color: #666666">7000</span> <span style="color: #408080; font-style: italic"># in sec</span>
+refreshPeriod <span style="color: #666666">=</span> <span style="color: #666666">100</span> <span style="color: #408080; font-style: italic"># in ms</span>
+
+fig,ax <span style="color: #666666">=</span> plt<span style="color: #666666">.</span>subplots(figsize<span style="color: #666666">=</span>(<span style="color: #666666">6</span>,<span style="color: #666666">6</span>))
+
+plt<span style="color: #666666">.</span>plot(G1_velocity[(G1_velocity<span style="color: #666666">&gt;6320</span>) <span style="color: #666666">&amp;</span> (G1_velocity<span style="color: #666666">&lt;6710</span>)], G1_flux[(G1_velocity<span style="color: #666666">&gt;6320</span>) <span style="color: #666666">&amp;</span> (G1_velocity<span style="color: #666666">&lt;6710</span>)], <span style="color: #BA2121">&#39;grey&#39;</span>, linewidth<span style="color: #666666">=8</span>, label<span style="color: #666666">=</span><span style="color: #BA2121">&#39;ESO153-G017&#39;</span>)
+<span style="color: #408080; font-style: italic"># Spectrum where Atomic Hydrogen emission is</span>
+ax<span style="color: #666666">.</span>plot(G1_velocity[(G1_velocity<span style="color: #666666">&gt;6320</span>) <span style="color: #666666">&amp;</span> (G1_velocity<span style="color: #666666">&lt;6525</span>)],G1_flux[(G1_velocity<span style="color: #666666">&gt;6320</span>) <span style="color: #666666">&amp;</span> (G1_velocity<span style="color: #666666">&lt;6525</span>)], <span style="color: #BA2121">&#39;b-&#39;</span>, color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;blue&#39;</span>, linewidth<span style="color: #666666">=2</span>, label<span style="color: #666666">=</span><span style="color: #BA2121">&#39;&#39;</span>)
+ax<span style="color: #666666">.</span>plot(G1_velocity[(G1_velocity<span style="color: #666666">&gt;6525</span>) <span style="color: #666666">&amp;</span> (G1_velocity<span style="color: #666666">&lt;7525</span>)],G1_flux[(G1_velocity<span style="color: #666666">&gt;6525</span>) <span style="color: #666666">&amp;</span> (G1_velocity<span style="color: #666666">&lt;7525</span>)], <span style="color: #BA2121">&#39;b-&#39;</span>, color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;red&#39;</span>, linewidth<span style="color: #666666">=2</span>, label<span style="color: #666666">=</span><span style="color: #BA2121">&#39;&#39;</span>)
+plt<span style="color: #666666">.</span>ylabel(<span style="color: #BA2121">&quot;Total Fulx Density [Jy]&quot;</span>, fontsize<span style="color: #666666">=22</span>)
+plt<span style="color: #666666">.</span>xlabel(<span style="color: #BA2121">&quot;Velocity [km s$^{-1}$]&quot;</span>, fontsize <span style="color: #666666">=</span> <span style="color: #666666">22</span>)
+
+plt<span style="color: #666666">.</span>tight_layout()
+plt<span style="color: #666666">.</span>xlim(<span style="color: #666666">6320</span>,<span style="color: #666666">6710</span>)
+plt<span style="color: #666666">.</span>ylim(<span style="color: #666666">-0.008</span>, <span style="color: #666666">0.12</span>)
+
+<span style="color: #408080; font-style: italic"># Line Animation</span>
+vl <span style="color: #666666">=</span> ax<span style="color: #666666">.</span>axvline(<span style="color: #666666">6320</span>, ls<span style="color: #666666">=</span><span style="color: #BA2121">&#39;-&#39;</span>, color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;k&#39;</span>, lw<span style="color: #666666">=3</span>, zorder<span style="color: #666666">=10</span>)
+
+<span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">animate</span>(i, vl, period):
+    t <span style="color: #666666">=</span> i<span style="color: #666666">*</span>period<span style="color: #666666">/14</span>
+    vl<span style="color: #666666">.</span>set_xdata([t<span style="color: #666666">+6320</span>,t<span style="color: #666666">+6320</span>])
+    <span style="color: #008000; font-weight: bold">return</span> vl
+
+ani <span style="color: #666666">=</span> animation<span style="color: #666666">.</span>FuncAnimation(fig, animate, frames<span style="color: #666666">=</span><span style="color: #008000">int</span>(duration<span style="color: #666666">/</span>(refreshPeriod<span style="color: #666666">/1</span>)), fargs<span style="color: #666666">=</span>(vl,refreshPeriod), interval<span style="color: #666666">=</span>refreshPeriod)
+plt<span style="color: #666666">.</span>show()
+
+<span style="color: #408080; font-style: italic"># SOUND</span>
+
+<span style="color: #408080; font-style: italic"># Placing data into input Table</span>
+<span style="color: #408080; font-style: italic"># We will place our Velocity information as a &#39;time&#39; input</span>
+data_table <span style="color: #666666">=</span> Table({<span style="color: #BA2121">&quot;time&quot;</span>: G1_velocity[(G1_velocity<span style="color: #666666">&gt;6320</span>) <span style="color: #666666">&amp;</span> (G1_velocity<span style="color: #666666">&lt;6710</span>)], 
+                    <span style="color: #BA2121">&quot;flux&quot;</span>: G1_flux[(G1_velocity<span style="color: #666666">&gt;6320</span>) <span style="color: #666666">&amp;</span> (G1_velocity<span style="color: #666666">&lt;6710</span>)]})
+
+<span style="color: #408080; font-style: italic"># Sonify the data</span>
+soni_obj <span style="color: #666666">=</span> SoniSeries(data_table)
+soni_obj<span style="color: #666666">.</span>note_spacing <span style="color: #666666">=</span> <span style="color: #666666">0.07</span> <span style="color: #408080; font-style: italic"># Speed of the played sound, increase number to slow it down</span>
+soni_obj<span style="color: #666666">.</span>sonify()
+<span style="color: #408080; font-style: italic"># Play</span>
+soni_obj<span style="color: #666666">.</span>play()
+<span style="color: #408080; font-style: italic"># If you want to save it, uncomment the line below, it will save `Galaxy.mp3` file into your working directory</span>
+<span style="color: #408080; font-style: italic">#soni_obj.write(&#39;Galaxy.mp3&#39;)</span>
+</pre></div>
+
+<br>
+
+<h3>See more and play with the Jupyter Notebook <a href="https://github.com/rdzudzar/Sonify" target="_blank">here</a></h3>
+
+								</section>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section>
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Homepage</a></li>
+										<li><a href="research.html">Research</a></li>
+										<li><a href="programming_projects.html">Coding Projects</a></li>
+										<li><a href="coding_tutorials.html">Coding Tutorials</a></li>
+										<li><a href="visualizations.html">Visualizations</a></li>
+
+									</ul>
+								</nav>
+
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Robert Dzudzar. All rights reserved. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
