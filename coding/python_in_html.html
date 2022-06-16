@@ -1,0 +1,458 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+
+				<!-- Google Tag Manager -->
+				<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+					new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+					j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+					'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+					})(window,document,'script','dataLayer','GTM-WJ93LWF');</script>
+					<!-- End Google Tag Manager -->
+					
+		<title>Coding Projects</title>
+		<meta charset="utf-8" />
+		
+	<link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+   	<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <py-env>
+      - matplotlib
+      - scipy
+      - numpy
+    </py-env>
+
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="../assets/css/main.css" />
+
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="" class="logo"><strong>PyScript: Python in the Browser</strong> by Robert Džudžar</a>
+									<ul class="icons">
+										<li><a href="https://www.linkedin.com/in/robertdzudzar/" target="_blank" class="icon brands fa-linkedin"></a></li>
+										<li><a href="https://github.com/rdzudzar" target="_blank" class="icon brands fa-github"></a></li>
+										<li><a href="https://twitter.com/robertdzudzar" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+
+									<header class="main">
+									<h2>PyScript: Python in the Browser</h2>
+
+
+									<ul> With the new <a href="https://github.com/pyscript/pyscript" target="_blank">PyScript</a> project, you can embed Python codes directly in your .html page content and code will execute within your browser without any server-based requirements. Read more about the project and its development <a href="https://www.anaconda.com/blog/pyscript-python-in-the-browser" target="_blank">here</a> </ul>
+
+									<ul> First, make sure to include two scripts into your .html <b>head</b> content: </ul>
+<ul>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.0em .0em .0em .0em;padding:.0em .0em;"><pre style="margin: 0; line-height: 125%">    <span style="color: #bb0066; font-weight: bold">&lt;link</span> <span style="color: #336699">rel=</span><span style="color: #dd2200; background-color: #fff0f0">&quot;stylesheet&quot;</span> <span style="color: #336699">href=</span><span style="color: #dd2200; background-color: #fff0f0">&quot;https://pyscript.net/alpha/pyscript.css&quot;</span> <span style="color: #bb0066; font-weight: bold">/&gt;</span>
+    <span style="color: #bb0066; font-weight: bold">&lt;script </span><span style="color: #336699">defer</span> <span style="color: #336699">src=</span><span style="color: #dd2200; background-color: #fff0f0">&quot;https://pyscript.net/alpha/pyscript.js&quot;</span><span style="color: #bb0066; font-weight: bold">&gt;&lt;/script&gt;</span>
+</pre></div>
+</ul>
+
+
+									<ul> You should embedd a Python code in the <b>py-script</b> block which will then render the code and show output on your page. I've decided to try it out, see examples below: </ul>
+									<div class="row">
+											<div class="col-6 col-12-small">
+												<h3>Python Script</h3>
+												
+												<!-- HTML generated using hilite.me -->
+												<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .6em;padding:.2em .6em;"><pre style="margin: 0; line-height: 110%;"><span style="color: #bb0066; font-weight: bold">&lt;pyscript&gt;</span> print(&#39;Hello, World!&#39;) <span style="color: #bb0066; font-weight: bold">&lt;/pyscript&gt;</span>
+												</pre></div>
+
+											
+											</div>
+											<div class="col-6 col-12-small">
+												<h3>Output from Python Script</h3>
+												<ul> <py-script> print('Hello, World!') </py-script> </ul>
+											</div>
+									</div>
+
+<hr class="major" />
+<h2>Matplotlib Figure</h2>
+
+<ul> I wanted to test the plotting so I decided to use code from my "Distribution Analyser" web application. You can read more about Distribution Analyser <a href="https://rdzudzar.github.io/distribution_analyser.html" target="_blank">here.</a>, and play with it live <a href="https://share.streamlit.io/rdzudzar/distributionanalyser/main/main.py" target="_blank">here.</a>. One of the available options within the app is to generate Python code of the displayed distribution. I copied code over and made 1 adjustment prior to embedding code within the .html: I had to do change the last line from <b>plt.show()</b> to <b>fig</b>.  </ul>
+
+<ul> In order to render Python code within .html, it is needed to place the code inside:</ul>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .6em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #bb0066; font-weight: bold">&lt;div</span> <span style="color: #336699">id=</span><span style="color: #dd2200; background-color: #fff0f0">&quot;mpl&quot;</span><span style="color: #bb0066; font-weight: bold">&gt;&lt;/div&gt;</span>
+<span style="color: #bb0066; font-weight: bold">&lt;py</span><span style="color: #336699">-script</span> <span style="color: #336699">output=</span><span style="color: #dd2200; background-color: #fff0f0">&quot;mpl&quot;</span><span style="color: #bb0066; font-weight: bold">&gt;</span>
+
+# Your plotting code here
+
+<span style="color: #a61717; background-color: #e3d2d2">&lt;</span>/py-script&gt;
+</pre></div>
+
+<br></br>
+<ul>If you are importing Python packages in your code, you should specify them in your .html document within <b>head</b>. In my case, I am using <b>matplotlib</b>, <b>scipy</b> and <b>numpy</b>:</ul>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .6em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #bb0066; font-weight: bold">&lt;py</span><span style="color: #336699">-env</span><span style="color: #bb0066; font-weight: bold">&gt;</span>
+  - matplotlib
+  - scipy
+  - numpy
+<span style="color: #a61717; background-color: #e3d2d2">&lt;</span>/py-env&gt;
+</pre></div>
+
+<br></br>
+									<div class="row">
+											<div class="col-6 col-12-small">
+												<h3>Python Script</h3>
+												
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .6em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #666666">&lt;</span>div <span style="color: #008000">id</span><span style="color: #666666">=</span><span style="color: #BA2121">&quot;mpl&quot;</span><span style="color: #666666">&gt;&lt;/</span>div<span style="color: #666666">&gt;</span>
+<span style="color: #666666">&lt;</span>py<span style="color: #666666">-</span>script output<span style="color: #666666">=</span><span style="color: #BA2121">&quot;mpl&quot;</span><span style="color: #666666">&gt;</span>
+<span style="color: #408080; font-style: italic"># -*- coding: utf-8 -*-</span>
+<span style="color: #408080; font-style: italic"># Generated using Distribution Analyser:</span>
+<span style="color: #408080; font-style: italic"># https://github.com/rdzudzar/DistributionAnalyser</span>
+<span style="color: #408080; font-style: italic"># 20220615_120246</span>
+<span style="color: #408080; font-style: italic"># ---</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">matplotlib.pyplot</span> <span style="color: #008000; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">plt</span> <span style="color: #408080; font-style: italic">#v3.2.2</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">numpy</span> <span style="color: #008000; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">np</span> <span style="color: #408080; font-style: italic">#v1.18.5</span>
+<span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">scipy.stats</span> <span style="color: #008000; font-weight: bold">import</span> dweibull <span style="color: #408080; font-style: italic">#v1.6.1</span>
+
+<span style="color: #408080; font-style: italic"># Set random seed</span>
+np<span style="color: #666666">.</span>random<span style="color: #666666">.</span>seed(<span style="color: #666666">1</span>)
+
+<span style="color: #408080; font-style: italic"># Function parameters</span>
+scale<span style="color: #666666">=1.0</span>
+loc<span style="color: #666666">=0.0</span>
+c<span style="color: #666666">=2.07</span>              
+
+<span style="color: #408080; font-style: italic"># Generate evenly spaced numbers over a specified interval</span>
+size <span style="color: #666666">=</span> <span style="color: #666666">400</span>
+x <span style="color: #666666">=</span> np<span style="color: #666666">.</span>linspace(dweibull<span style="color: #666666">.</span>ppf(<span style="color: #666666">0.001</span>, c, loc<span style="color: #666666">=</span>loc, scale<span style="color: #666666">=</span>scale ), 
+                dweibull<span style="color: #666666">.</span>ppf(<span style="color: #666666">0.999</span>, c, loc<span style="color: #666666">=</span>loc, scale<span style="color: #666666">=</span>scale ),
+                size)
+
+<span style="color: #408080; font-style: italic"># Freeze the distribution</span>
+rv <span style="color: #666666">=</span> dweibull(c, loc<span style="color: #666666">=</span>loc, scale<span style="color: #666666">=</span>scale)
+
+<span style="color: #408080; font-style: italic"># Generate random numbers</span>
+r <span style="color: #666666">=</span> dweibull<span style="color: #666666">.</span>rvs(c, loc<span style="color: #666666">=</span>loc, scale<span style="color: #666666">=</span>scale, size<span style="color: #666666">=</span>size)
+
+<span style="color: #408080; font-style: italic"># Make a plot</span>
+fig, ax <span style="color: #666666">=</span> plt<span style="color: #666666">.</span>subplots(<span style="color: #666666">2</span>, <span style="color: #666666">1</span>,
+                       gridspec_kw<span style="color: #666666">=</span>{<span style="color: #BA2121">&#39;height_ratios&#39;</span>: [<span style="color: #666666">9</span>, <span style="color: #666666">0.7</span>]})
+
+<span style="color: #408080; font-style: italic"># Plot PDF, CDF and SF</span>
+ax[<span style="color: #666666">0</span>]<span style="color: #666666">.</span>plot(x, rv<span style="color: #666666">.</span>pdf(x), linestyle<span style="color: #666666">=</span><span style="color: #BA2121">&#39;-&#39;</span>, color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;#3182bd&#39;</span>, lw<span style="color: #666666">=3</span>, label<span style="color: #666666">=</span><span style="color: #BA2121">&#39;PDF&#39;</span>)
+ax[<span style="color: #666666">0</span>]<span style="color: #666666">.</span>plot(x, rv<span style="color: #666666">.</span>cdf(x), linestyle<span style="color: #666666">=</span><span style="color: #BA2121">&#39;-&#39;</span>, color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;k&#39;</span>, lw<span style="color: #666666">=3</span>, label<span style="color: #666666">=</span><span style="color: #BA2121">&#39;CDF&#39;</span>)
+ax[<span style="color: #666666">0</span>]<span style="color: #666666">.</span>plot(x, rv<span style="color: #666666">.</span>sf(x), linestyle<span style="color: #666666">=</span><span style="color: #BA2121">&#39;-&#39;</span>, color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;#df65b0&#39;</span>, lw<span style="color: #666666">=3</span>, label<span style="color: #666666">=</span><span style="color: #BA2121">&#39;SF&#39;</span>)
+
+<span style="color: #408080; font-style: italic"># Plot Histogram</span>
+ax[<span style="color: #666666">0</span>]<span style="color: #666666">.</span>hist(r, density<span style="color: #666666">=</span><span style="color: #008000; font-weight: bold">True</span>, bins<span style="color: #666666">=20</span>, color<span style="color: #666666">=</span><span style="color: #BA2121">&#39;lightgrey&#39;</span>,
+           edgecolor<span style="color: #666666">=</span><span style="color: #BA2121">&#39;k&#39;</span>, label<span style="color: #666666">=</span><span style="color: #BA2121">&#39;Sample&#39;</span>)
+
+<span style="color: #408080; font-style: italic"># Plot Boxplot</span>
+bp <span style="color: #666666">=</span> ax[<span style="color: #666666">1</span>]<span style="color: #666666">.</span>boxplot(r, patch_artist<span style="color: #666666">=</span><span style="color: #008000; font-weight: bold">True</span>,
+           vert<span style="color: #666666">=</span><span style="color: #008000; font-weight: bold">False</span>,
+           notch<span style="color: #666666">=</span><span style="color: #008000; font-weight: bold">False</span>,
+           showfliers<span style="color: #666666">=</span><span style="color: #008000; font-weight: bold">False</span>,
+           ) 
+<span style="color: #408080; font-style: italic"># Boxplot aestetic</span>
+<span style="color: #008000; font-weight: bold">for</span> median <span style="color: #AA22FF; font-weight: bold">in</span> bp[<span style="color: #BA2121">&#39;medians&#39;</span>]: median<span style="color: #666666">.</span>set(color <span style="color: #666666">=</span><span style="color: #BA2121">&#39;red&#39;</span>, linewidth <span style="color: #666666">=</span> <span style="color: #666666">2</span>) 
+<span style="color: #008000; font-weight: bold">for</span> patch <span style="color: #AA22FF; font-weight: bold">in</span> bp[<span style="color: #BA2121">&#39;boxes&#39;</span>]: patch<span style="color: #666666">.</span>set(facecolor<span style="color: #666666">=</span><span style="color: #BA2121">&#39;white&#39;</span>) 
+
+<span style="color: #408080; font-style: italic"># Set legend</span>
+ax[<span style="color: #666666">0</span>]<span style="color: #666666">.</span>legend(bbox_to_anchor<span style="color: #666666">=</span>(<span style="color: #666666">0</span>,<span style="color: #666666">1.1</span>,<span style="color: #666666">1</span>,<span style="color: #666666">0.2</span>), 
+             loc<span style="color: #666666">=</span><span style="color: #BA2121">&quot;center&quot;</span>, 
+             borderaxespad<span style="color: #666666">=0</span>, ncol<span style="color: #666666">=2</span>)
+
+<span style="color: #408080; font-style: italic"># Set Figure aestetics</span>
+ax[<span style="color: #666666">0</span>]<span style="color: #666666">.</span>spines[<span style="color: #BA2121">&#39;top&#39;</span>]<span style="color: #666666">.</span>set_visible(<span style="color: #008000; font-weight: bold">False</span>)
+ax[<span style="color: #666666">0</span>]<span style="color: #666666">.</span>spines[<span style="color: #BA2121">&#39;right&#39;</span>]<span style="color: #666666">.</span>set_visible(<span style="color: #008000; font-weight: bold">False</span>)
+ax[<span style="color: #666666">0</span>]<span style="color: #666666">.</span>set_title(<span style="color: #BA2121">&#39;Distribution: dweibull&#39;</span>)
+
+ax[<span style="color: #666666">1</span>]<span style="color: #666666">.</span>set_xlim(ax[<span style="color: #666666">0</span>]<span style="color: #666666">.</span>get_xlim())
+ax[<span style="color: #666666">1</span>]<span style="color: #666666">.</span>set_ylim(<span style="color: #666666">0.9</span>, <span style="color: #666666">1.1</span>)
+ax[<span style="color: #666666">1</span>]<span style="color: #666666">.</span>spines[<span style="color: #BA2121">&#39;left&#39;</span>]<span style="color: #666666">.</span>set_visible(<span style="color: #008000; font-weight: bold">False</span>)
+ax[<span style="color: #666666">1</span>]<span style="color: #666666">.</span>spines[<span style="color: #BA2121">&#39;top&#39;</span>]<span style="color: #666666">.</span>set_visible(<span style="color: #008000; font-weight: bold">False</span>)
+ax[<span style="color: #666666">1</span>]<span style="color: #666666">.</span>spines[<span style="color: #BA2121">&#39;right&#39;</span>]<span style="color: #666666">.</span>set_visible(<span style="color: #008000; font-weight: bold">False</span>)
+ax[<span style="color: #666666">1</span>]<span style="color: #666666">.</span>set_yticklabels([])
+ax[<span style="color: #666666">1</span>]<span style="color: #666666">.</span>set_yticks([])
+
+ax[<span style="color: #666666">1</span>]<span style="color: #666666">.</span>set_xlabel(<span style="color: #BA2121">&#39;X value&#39;</span>)
+ax[<span style="color: #666666">0</span>]<span style="color: #666666">.</span>set_ylabel(<span style="color: #BA2121">&#39;Density&#39;</span>)
+
+fig
+<span style="color: #666666">&lt;/</span>py<span style="color: #666666">-</span>script<span style="color: #666666">&gt;</span>
+</pre></div>
+
+
+											
+											</div>
+											<div class="col-6 col-12-small">
+												<h3>Output from Python Script</h3>
+												      <div id="mpl"></div>
+      <py-script output="mpl">
+			import matplotlib.pyplot as plt #v3.2.2
+			import numpy as np #v1.18.5
+			from scipy.stats import dweibull #v1.6.1
+
+			# Set random seed
+			np.random.seed(1)
+
+			# Function parameters
+			scale=1.0
+			loc=0.0
+			c=2.07              
+
+			# Generate evenly spaced numbers over a specified interval
+			size = 400
+			x = np.linspace(dweibull.ppf(0.001, c, loc=loc, scale=scale ), 
+			                dweibull.ppf(0.999, c, loc=loc, scale=scale ),
+			                size)
+
+			# Freeze the distribution
+			rv = dweibull(c, loc=loc, scale=scale)
+
+			# Generate random numbers
+			r = dweibull.rvs(c, loc=loc, scale=scale, size=size)
+
+			# Make a plot
+			fig, ax = plt.subplots(2, 1,
+			                       gridspec_kw={'height_ratios': [9, 0.7]})
+
+			# Plot PDF, CDF and SF
+			ax[0].plot(x, rv.pdf(x), linestyle='-', color='#3182bd', lw=3, label='PDF')
+			ax[0].plot(x, rv.cdf(x), linestyle='-', color='k', lw=3, label='CDF')
+			ax[0].plot(x, rv.sf(x), linestyle='-', color='#df65b0', lw=3, label='SF')
+
+			# Plot Histogram
+			ax[0].hist(r, density=True, bins=20, color='lightgrey',
+			           edgecolor='k', label='Sample')
+
+			# Plot Boxplot
+			bp = ax[1].boxplot(r, patch_artist=True,
+			           vert=False,
+			           notch=False,
+			           showfliers=False,
+			           ) 
+			# Boxplot aestetic
+			for median in bp['medians']: median.set(color ='red', linewidth = 2) 
+			for patch in bp['boxes']: patch.set(facecolor='white') 
+
+			# Set legend
+			ax[0].legend(bbox_to_anchor=(0,1.1,1,0.2), 
+			             loc="center", 
+			             borderaxespad=0, ncol=2)
+
+			# Set Figure aestetics
+			ax[0].spines['top'].set_visible(False)
+			ax[0].spines['right'].set_visible(False)
+			ax[0].set_title('Distribution: dweibull')
+
+			ax[1].set_xlim(ax[0].get_xlim())
+			ax[1].set_ylim(0.9, 1.1)
+			ax[1].spines['left'].set_visible(False)
+			ax[1].spines['top'].set_visible(False)
+			ax[1].spines['right'].set_visible(False)
+			ax[1].set_yticklabels([])
+			ax[1].set_yticks([])
+
+			ax[1].set_xlabel('X value')
+			ax[0].set_ylabel('Density')
+
+			fig
+      	</py-script>
+</div>
+</div>
+
+</hr>
+
+<hr class="major" />
+<h2> Colormap </h2>
+
+<ul> Here is an example of a Colormap. The code is generated with the Color Extractor web application, you can access web app <a href="https://share.streamlit.io/rdzudzar/colorextractor/main/main.py" target="_blank">here.</a>. </ul>
+									
+									<div class="row">
+											<div class="col-6 col-12-small">
+												<h3>Python Script</h3>
+												
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .6em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic"># -*- coding: utf-8 -*-</span>
+<span style="color: #408080; font-style: italic"># Generated using Color Extractor:</span>
+<span style="color: #408080; font-style: italic"># https://github.com/rdzudzar/ColorExtractor</span>
+<span style="color: #408080; font-style: italic"># 20220615_130653</span>
+<span style="color: #408080; font-style: italic"># --- </span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">matplotlib</span> <span style="color: #408080; font-style: italic"># v3.4.3</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">matplotlib.pyplot</span> <span style="color: #008000; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">plt</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">numpy</span> <span style="color: #008000; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">np</span> <span style="color: #408080; font-style: italic">#v1.20.3</span>
+
+<span style="color: #408080; font-style: italic"># Add #colors and create colormap</span>
+created_cmap <span style="color: #666666">=</span> matplotlib<span style="color: #666666">.</span>colors<span style="color: #666666">.</span>LinearSegmentedColormap<span style="color: #666666">.</span>from_list(<span style="color: #BA2121">&quot;mycmap&quot;</span>,
+                                [<span style="color: #BA2121">&#39;#075b7f&#39;</span>, <span style="color: #BA2121">&#39;#f5ebcf&#39;</span>, <span style="color: #BA2121">&#39;#cb2fce&#39;</span>])
+
+<span style="color: #408080; font-style: italic"># Register name of your colormap</span>
+plt<span style="color: #666666">.</span>register_cmap(<span style="color: #BA2121">&quot;mycmap&quot;</span>, created_cmap)
+
+
+<span style="color: #408080; font-style: italic"># Get colors from the cmap</span>
+x <span style="color: #666666">=</span> np<span style="color: #666666">.</span>linspace(<span style="color: #666666">0</span>, <span style="color: #666666">1</span>, <span style="color: #666666">256</span>)[<span style="color: #008000; font-weight: bold">None</span>, :]
+
+<span style="color: #408080; font-style: italic"># See how colormap looks like</span>
+fig, ax <span style="color: #666666">=</span> plt<span style="color: #666666">.</span>subplots(figsize<span style="color: #666666">=</span>(<span style="color: #666666">7</span>,<span style="color: #666666">1.32</span>))
+
+ax<span style="color: #666666">.</span>imshow(x, aspect<span style="color: #666666">=</span><span style="color: #BA2121">&#39;auto&#39;</span>,
+          cmap <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;mycmap&quot;</span>)
+
+<span style="color: #408080; font-style: italic"># Turn off the X and Y axes</span>
+ax<span style="color: #666666">.</span>set_axis_off()
+ax<span style="color: #666666">.</span>xaxis<span style="color: #666666">.</span>set_visible(<span style="color: #008000; font-weight: bold">False</span>)
+ax<span style="color: #666666">.</span>yaxis<span style="color: #666666">.</span>set_visible(<span style="color: #008000; font-weight: bold">False</span>)
+
+plt<span style="color: #666666">.</span>show()
+</pre></div>
+
+											
+											</div>
+											<div class="col-6 col-12-small">
+												<h3>Output from Python Script</h3>
+
+	  <div id="plot"></div>
+      <py-script output="plot">
+import matplotlib # v3.4.3
+import matplotlib.pyplot as plt
+import numpy as np #v1.20.3
+
+# Add #colors and create colormap
+created_cmap = matplotlib.colors.LinearSegmentedColormap.from_list("mycmap",
+                                ['#075b7f', '#f5ebcf', '#cb2fce'])
+
+# Register name of your colormap
+plt.register_cmap("mycmap", created_cmap)
+
+
+# Get colors from the cmap
+x = np.linspace(0, 1, 256)[None, :]
+
+# See how colormap looks like
+fig, ax = plt.subplots(figsize=(7,1.32))
+
+ax.imshow(x, aspect='auto',
+          cmap = "mycmap")
+
+# Turn off the X and Y axes
+ax.set_axis_off()
+ax.xaxis.set_visible(False)
+ax.yaxis.set_visible(False)
+
+plt.show()
+
+fig
+      	</py-script>
+</hr>
+
+											</div>
+									</div>
+
+<hr class="major" />
+<h2>A Python REPL (Read Eval Print Loop)</h2>
+
+<ul> With PyScript, you can embedd a REPL component on your webpage and it will behave as a code editor, which will allow visitors to write executable code. Try it below, you can press <b>play button</b> or <b>Shift+Enter</b> to execute a Python code, e.g.: print("It works!"). </ul>
+
+
+		<div class="row">
+				<div class="col-6 col-12-small">
+					<h3>PyScript Code</h3>
+					
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .6em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #bb0066; font-weight: bold">&lt;div&gt;</span>
+   <span style="color: #bb0066; font-weight: bold">&lt;py</span><span style="color: #336699">-repl</span> <span style="color: #336699">id=</span><span style="color: #dd2200; background-color: #fff0f0">&quot;my-repl&quot;</span> <span style="color: #336699">auto-generate=</span><span style="color: #dd2200; background-color: #fff0f0">&quot;true&quot;</span><span style="color: #bb0066; font-weight: bold">&gt;</span> <span style="color: #a61717; background-color: #e3d2d2">&lt;</span>/py-repl&gt;
+<span style="color: #bb0066; font-weight: bold">&lt;/div&gt;</span>
+</pre></div>
+
+
+
+				
+				</div>
+				<div class="col-6 col-12-small">
+					<h3>Output:</h3>
+					
+					    <div>
+					      <py-repl id="my-repl" auto-generate="true"> </py-repl>
+					    </div>
+
+				</div>
+		</div>
+
+</hr>
+
+<hr class="major" />
+<h2>Instead of Conclusions</h2>
+
+<ul> It's new! It works! </ul>
+<ul> Yes, it's a bit slow, but have in mind it's still in development. You can find more examples on the PyScript <a href="https://github.com/pyscript/pyscript/tree/main/examples" target="_blank">GitHub</a> page, and test them out on their live page <a href="https://pyscript.net/examples/" target="_blank">GitHub</a> </ul>
+
+
+<h3> Few Lessons Learned While Trying Out PyScript </h3>
+
+<li> I'm using HTML5 UP Template on my website, in order to render .css properly, I had to define my .css stylesheet <b>after</b> the PyScripts' one. </li>
+<li> Python code has to have a proper identation, otherwise it will report an error. </li>
+<li> If you use e.g. <b> < div id="mpl">< /div></b> for one of your figures; you'll need to name next figure differently e.g. <b> < div id="plot">< /div></b>, so that they are not plotted one next to another (unless you want that). </li>
+
+<li> When specifying which libraries to import inside <b>< py-env ></b>, your <b>< py-env ></b> has to be inline with <b>< head ></b>, otherwise it results in an error. </li>
+
+</hr>
+
+
+
+							</section>
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<br></br>
+										<br></br>
+										<br></br>
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="../index.html">Homepage</a></li>
+										<li><a href="../research.html">Research</a></li>
+										<li><a href="../book.html">Astronomy Book</a></li>
+										<li><a href="../programming_projects.html">Coding Projects</a></li>
+										<li><a href="../visualizations.html">Visualizations</a></li>
+
+									</ul>
+								</nav>
+
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Robert Dzudzar. All rights reserved. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+
+	</body>
+</html>
