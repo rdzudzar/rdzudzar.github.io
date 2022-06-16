@@ -57,9 +57,10 @@
 									<h2>PyScript: Python in the Browser</h2>
 
 
-									<ul> With the new <a href="https://github.com/pyscript/pyscript" target="_blank">PyScript</a> project, you can embed Python codes directly in your .html page content and code will execute within your browser without any server-based requirements. Read more about the project and its development <a href="https://www.anaconda.com/blog/pyscript-python-in-the-browser" target="_blank">here</a> </ul>
+									<ul> With the new <a href="https://github.com/pyscript/pyscript" target="_blank">PyScript</a> project, you can embed a Python code directly in your .html page content and code will execute within your browser without any server-based requirements. Read more about the project and its development <a href="https://www.anaconda.com/blog/pyscript-python-in-the-browser" target="_blank">here</a> </ul>
 
-									<ul> First, make sure to include two scripts into your .html <b>head</b> content: </ul>
+									<ul> It's simple to use PyScript:</ul> 
+									<ul> 1) Include two scripts into your .html <b>head</b> content: </ul>
 <ul>
 <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.0em .0em .0em .0em;padding:.0em .0em;"><pre style="margin: 0; line-height: 125%">    <span style="color: #bb0066; font-weight: bold">&lt;link</span> <span style="color: #336699">rel=</span><span style="color: #dd2200; background-color: #fff0f0">&quot;stylesheet&quot;</span> <span style="color: #336699">href=</span><span style="color: #dd2200; background-color: #fff0f0">&quot;https://pyscript.net/alpha/pyscript.css&quot;</span> <span style="color: #bb0066; font-weight: bold">/&gt;</span>
     <span style="color: #bb0066; font-weight: bold">&lt;script </span><span style="color: #336699">defer</span> <span style="color: #336699">src=</span><span style="color: #dd2200; background-color: #fff0f0">&quot;https://pyscript.net/alpha/pyscript.js&quot;</span><span style="color: #bb0066; font-weight: bold">&gt;&lt;/script&gt;</span>
@@ -67,10 +68,12 @@
 </ul>
 
 
-									<ul> You should embedd a Python code in the <b>py-script</b> block which will then render the code and show output on your page. I've decided to try it out, see examples below: </ul>
+									<ul> 2) Embedd a Python code in the <b>py-script</b> block - which will then render the code and show output on your page.</ul>
+
+									<ul> I've decided to try it out, see examples below: </ul>
 									<div class="row">
 											<div class="col-6 col-12-small">
-												<h3>Python Script</h3>
+												<h3>PyScript</h3>
 												
 												<!-- HTML generated using hilite.me -->
 												<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .6em;padding:.2em .6em;"><pre style="margin: 0; line-height: 110%;"><span style="color: #bb0066; font-weight: bold">&lt;pyscript&gt;</span> print(&#39;Hello, World!&#39;) <span style="color: #bb0066; font-weight: bold">&lt;/pyscript&gt;</span>
@@ -79,7 +82,7 @@
 											
 											</div>
 											<div class="col-6 col-12-small">
-												<h3>Output from Python Script</h3>
+												<h3>Output from PyScript</h3>
 												<ul> <py-script> print('Hello, World!') </py-script> </ul>
 											</div>
 									</div>
@@ -87,7 +90,7 @@
 <hr class="major" />
 <h2>Matplotlib Figure</h2>
 
-<ul> I wanted to test the plotting so I decided to use code from my "Distribution Analyser" web application. You can read more about Distribution Analyser <a href="https://rdzudzar.github.io/distribution_analyser.html" target="_blank">here.</a>, and play with it live <a href="https://share.streamlit.io/rdzudzar/distributionanalyser/main/main.py" target="_blank">here.</a>. One of the available options within the app is to generate Python code of the displayed distribution. I copied code over and made 1 adjustment prior to embedding code within the .html: I had to do change the last line from <b>plt.show()</b> to <b>fig</b>.  </ul>
+<ul> I wanted to test the plotting, so I decided to use code from my <b>Distribution Analyser</b> web application. You can read more about Distribution Analyser <a href="https://rdzudzar.github.io/distribution_analyser.html" target="_blank">here</a>, and play with it live <a href="https://share.streamlit.io/rdzudzar/distributionanalyser/main/main.py" target="_blank">here</a>. One of the available options within the app is to generate Python code of the displayed distribution. I copied the code and made only 1 adjustment prior to embedding code within the PyScript: I had to change the last line from <b>plt.show()</b> to <b>fig</b>.  </ul>
 
 <ul> In order to render Python code within .html, it is needed to place the code inside:</ul>
 <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .6em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #bb0066; font-weight: bold">&lt;div</span> <span style="color: #336699">id=</span><span style="color: #dd2200; background-color: #fff0f0">&quot;mpl&quot;</span><span style="color: #bb0066; font-weight: bold">&gt;&lt;/div&gt;</span>
@@ -97,9 +100,8 @@
 
 <span style="color: #a61717; background-color: #e3d2d2">&lt;</span>/py-script&gt;
 </pre></div>
-
-<br></br>
-<ul>If you are importing Python packages in your code, you should specify them in your .html document within <b>head</b>. In my case, I am using <b>matplotlib</b>, <b>scipy</b> and <b>numpy</b>:</ul>
+<ul></ul>
+<ul>If you are importing Python packages in your code, you should specify them in your .html document within <b>head</b>. In my case, I am using <b>matplotlib</b>, <b>scipy</b> and <b>numpy</b>, so I added these lines:</ul>
 <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .6em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #bb0066; font-weight: bold">&lt;py</span><span style="color: #336699">-env</span><span style="color: #bb0066; font-weight: bold">&gt;</span>
   - matplotlib
   - scipy
@@ -277,7 +279,7 @@ fig
 <hr class="major" />
 <h2> Colormap </h2>
 
-<ul> Here is an example of a Colormap. The code is generated with the Color Extractor web application, you can access web app <a href="https://share.streamlit.io/rdzudzar/colorextractor/main/main.py" target="_blank">here.</a>. </ul>
+<ul> Here is an example of a Colormap. The colormap code is generated with the <b>Color Extractor</b> web application. You can access web app <a href="https://share.streamlit.io/rdzudzar/colorextractor/main/main.py" target="_blank">here.</a>. </ul>
 									
 									<div class="row">
 											<div class="col-6 col-12-small">
@@ -363,7 +365,7 @@ fig
 <hr class="major" />
 <h2>A Python REPL (Read Eval Print Loop)</h2>
 
-<ul> With PyScript, you can embedd a REPL component on your webpage and it will behave as a code editor, which will allow visitors to write executable code. Try it below, you can press <b>play button</b> or <b>Shift+Enter</b> to execute a Python code, e.g.: print("It works!"). </ul>
+<ul> With PyScript, you can embedd a REPL component on your webpage and it will behave as a code editor, which will allow visitors to write executable code. Try it below! You can press <b>play button</b> or <b>Shift+Enter</b> to execute a Python code, e.g.: print("It works!"). </ul>
 
 
 		<div class="row">
@@ -394,17 +396,18 @@ fig
 <hr class="major" />
 <h2>Instead of Conclusions</h2>
 
-<ul> It's new! It works! </ul>
-<ul> Yes, it's a bit slow, but have in mind it's still in development. You can find more examples on the PyScript <a href="https://github.com/pyscript/pyscript/tree/main/examples" target="_blank">GitHub</a> page, and test them out on their live page <a href="https://pyscript.net/examples/" target="_blank">GitHub</a> </ul>
+<ul> <i class="fas fa-thumbs-up"></i> It's new! It works! </ul> 
+<ul> Yes, it's a bit slow, but have in mind it's still in development. You can find more PyScript examples on their <a href="https://github.com/pyscript/pyscript/tree/main/examples" target="_blank">GitHub</a> page, and test them out on their live <a href="https://pyscript.net/examples/" target="_blank">web page.</a> </ul>
 
 
 <h3> Few Lessons Learned While Trying Out PyScript </h3>
 
-<li> I'm using HTML5 UP Template on my website, in order to render .css properly, I had to define my .css stylesheet <b>after</b> the PyScripts' one. </li>
+<li> I'm using HTML5 UP Template on my website, and in order to render .css properly I had to define my .css stylesheet <b>after</b> the PyScripts' one. </li>
 <li> Python code has to have a proper identation, otherwise it will report an error. </li>
 <li> If you use e.g. <b> < div id="mpl">< /div></b> for one of your figures; you'll need to name next figure differently e.g. <b> < div id="plot">< /div></b>, so that they are not plotted one next to another (unless you want that). </li>
 
 <li> When specifying which libraries to import inside <b>< py-env ></b>, your <b>< py-env ></b> has to be inline with <b>< head ></b>, otherwise it results in an error. </li>
+<li> You can access .html content of this page on my <a href="https://github.com/rdzudzar/rdzudzar.github.io/blob/master/coding/python_in_html.html" target="_blank">GitHub.</a></li>
 
 </hr>
 
