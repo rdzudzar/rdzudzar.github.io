@@ -1734,7 +1734,7 @@ button,
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   margin: 0 0 2em -6em;
-  width: calc(100% + 6em); }
+  width: calc(80% + 6em); }
   .posts article {
     -moz-flex-grow: 0;
     -webkit-flex-grow: 0;
