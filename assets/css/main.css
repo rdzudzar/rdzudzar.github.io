@@ -1338,6 +1338,21 @@ ul.actions {
         width: 100%; }
     ul.actions.fit.stacked {
       width: 100%; }
+    @media screen and (max-width: 800px) {
+    .actions.fit {
+    -moz-flex-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+
+     }
+     ul.actions.fit {
+      width: 50%;
+       }
+    ul.actions.fit li {
+      padding: 1.3em 0 0 0; }
+    }
+
 
 /* Icons */
 ul.icons {
