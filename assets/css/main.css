@@ -1301,7 +1301,7 @@ ul.actions {
   margin-left: -1em;
   padding-left: 0; }
   ul.actions li {
-    padding: 0 0 0 1em;
+    padding: 0 0 0 0em;
     vertical-align: middle; }
   ul.actions.special {
     -moz-justify-content: center;
@@ -1335,7 +1335,7 @@ ul.actions {
       flex-shrink: 1;
       width: 100%; }
       ul.actions.fit li > * {
-        width: 100%; }
+        width: 90%; }
     ul.actions.fit.stacked {
       width: 100%; }
     @media screen and (max-width: 800px) {
